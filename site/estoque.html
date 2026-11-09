@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estoque — Rota Motores</title>
+  <meta name="description" content="Explore nosso catálogo de seminovos inspecionados em Sousa, PB. Filtre por categoria, preço e quilometragem.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/design-system.css">
+  <style>
+    .filter-bar {
+      background-color: var(--color-paper);
+      border-radius: var(--radius-cards);
+      padding: var(--card-padding);
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1.2fr) minmax(0, 1.2fr);
+      gap: 16px;
+      margin-bottom: var(--spacing-40);
+      align-items: flex-end;
+    }
+    @media (max-width: 900px) {
+      .filter-bar {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Barra de Navegação Global Fixa -->
+  <header class="global-nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand" aria-label="Rota Motores Página Inicial">
+        <img src="assets/images/logo.svg" alt="" class="nav-brand-icon">
+        <span>Rota Motores</span>
+      </a>
+
+      <nav class="nav-menu" aria-label="Navegação Principal">
+        <div class="nav-item"><a href="index.html">Início</a></div>
+        <div class="nav-item active"><a href="estoque.html">Estoque</a></div>
+        <div class="nav-item"><a href="financiamento.html">Financiamento</a></div>
+        <div class="nav-item"><a href="sobre.html">Sobre</a></div>
+        <div class="nav-item"><a href="contato.html">Contato</a></div>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="admin.html" class="nav-btn-admin">Gestão</a>
+        <button type="button" class="nav-toggle" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="mobile-nav">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Drawer de Navegação Mobile -->
+  <nav id="mobile-nav" class="mobile-nav-drawer" aria-label="Menu Mobile">
+    <a href="index.html">Início</a>
+    <a href="estoque.html">Estoque</a>
+    <a href="financiamento.html">Financiamento</a>
+    <a href="sobre.html">Sobre</a>
+    <a href="contato.html">Contato</a>
+    <a href="admin.html">Painel de Gestão</a>
+  </nav>
+
+  <main>
+    <!-- Topo da Página (Faixa Branca) -->
+    <section class="section section-compact section-white">
+      <div class="container">
+        <span class="section-eyebrow">Catálogo Atualizado</span>
+        <h1 class="text-heading" style="margin-bottom: 12px;">Encontre seu próximo carro</h1>
+        <p class="text-body-sm color-mid-gray" style="max-width: 640px;">
+          Use os filtros para explorar os veículos e abra a ficha do modelo que chamou sua atenção. Todos os carros acompanham histórico de procedência.
+        </p>
+      </div>
+    </section>
+
+    <!-- Listagem e Filtros (Faixa Canvas) -->
+    <section class="section section-canvas" style="padding-top: 40px;">
+      <div class="container">
+        <!-- Barra de Filtros -->
+        <div class="filter-bar">
+          <div>
+            <label for="filtro-busca" class="form-label">Buscar modelo ou palavra-chave</label>
+            <input type="text" id="filtro-busca" class="form-input" placeholder="Ex: Corolla, Renegade, Flex...">
+          </div>
+
+          <div>
+            <label for="filtro-categoria" class="form-label">Categoria</label>
+            <select id="filtro-categoria" class="form-select">
+              <option value="">Todas as categorias</option>
+              <option value="Sedan">Sedan</option>
+              <option value="SUV">SUV</option>
+              <option value="Hatch">Hatch</option>
+              <option value="Picape">Picape</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="filtro-ordenacao" class="form-label">Ordenar por</label>
+            <select id="filtro-ordenacao" class="form-select">
+              <option value="recentes">Mais recentes</option>
+              <option value="preco-asc">Menor preço</option>
+              <option value="preco-desc">Maior preço</option>
+              <option value="km-asc">Menor quilometragem</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Indicador de Resultados -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+          <div id="contagem-resultados" class="text-caption color-mid-gray">Carregando catálogo...</div>
+          <button id="btn-limpar-filtros" class="btn-pill-ghost btn-pill-sm" style="display: none;">Limpar filtros</button>
+        </div>
+
+        <!-- Grid de Cards do Catálogo -->
+        <div class="grid-3" id="catalogo-grid">
+          <!-- Inserido dinamicamente via JS -->
+        </div>
+
+        <!-- Estado Vazio -->
+        <div id="estado-vazio" style="display: none; text-align: center; padding: 60px 20px; background-color: var(--color-paper); border-radius: var(--radius-cards);">
+          <div style="font-size: 40px; margin-bottom: 16px;">🔍</div>
+          <h3 class="text-subheading" style="margin-bottom: 8px;">Nenhum veículo encontrado.</h3>
+          <p class="text-body-sm color-mid-gray" style="max-width: 440px; margin: 0 auto 24px;">
+            Não encontramos veículos correspondentes aos critérios selecionados. Tente ajustar a busca ou limpar os filtros.
+          </p>
+          <button id="btn-redefinir" class="btn-pill-primary">Ver todos os veículos</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Rodapé Global -->
+  <footer class="global-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-brand-title">Rota Motores</div>
+          <p class="text-caption color-mid-gray">
+            Concessionária fictícia de seminovos ambientada em Sousa, PB. Projeto acadêmico de Desenvolvimento de Aplicações Web.
+          </p>
+        </div>
+
+        <div class="footer-links">
+          <div class="footer-links-group">
+            <h4>Navegação</h4>
+            <a href="index.html">Início</a>
+            <a href="estoque.html">Estoque</a>
+            <a href="financiamento.html">Financiamento</a>
+            <a href="sobre.html">Sobre o Projeto</a>
+            <a href="contato.html">Contato</a>
+          </div>
+
+          <div class="footer-links-group">
+            <h4>Gestão</h4>
+            <a href="admin.html">Painel Administrativo</a>
+            <a href="login.html">Login Gestor</a>
+          </div>
+
+          <div class="footer-links-group">
+            <h4>Atendimento Ilustrativo</h4>
+            <span class="text-caption color-mid-gray">Sousa, Paraíba</span>
+            <span class="text-caption color-mid-gray">contato@rotamotores.example</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-notice">
+          Projeto acadêmico · Veículos e valores demonstrativos · IFPB Campus Sousa
+        </div>
+        <div>
+          © 2026 Rota Motores. Todos os direitos reservados.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="js/nav.mjs"></script>
+  <script type="module">
+    import { listarVeiculos } from "./js/db.mjs";
+    import { formatarMoeda, formatarKm } from "./js/formatters.mjs";
+
+    let todosVeiculos = [];
+
+    const inputBusca = document.getElementById("filtro-busca");
+    const selectCategoria = document.getElementById("filtro-categoria");
+    const selectOrdenacao = document.getElementById("filtro-ordenacao");
+    const grid = document.getElementById("catalogo-grid");
+    const estadoVazio = document.getElementById("estado-vazio");
+    const contagemElem = document.getElementById("contagem-resultados");
+    const btnLimpar = document.getElementById("btn-limpar-filtros");
+    const btnRedefinir = document.getElementById("btn-redefinir");
+
+    async function carregarCatalogo() {
+      try {
+        todosVeiculos = await listarVeiculos();
+        aplicarFiltros();
+      } catch (err) {
+        console.error("Erro ao carregar veículos:", err);
+        contagemElem.textContent = "Erro ao carregar catálogo.";
+      }
+    }
+
+    function aplicarFiltros() {
+      const termo = (inputBusca.value || "").trim().toLowerCase();
+      const categoria = selectCategoria.value;
+      const ordenacao = selectOrdenacao.value;
+
+      let filtrados = todosVeiculos.filter(v => {
+        const textoCompleto = `${v.nome} ${v.categoria} ${v.combustivel || ''} ${v.cambio || ''} ${v.cor || ''}`.toLowerCase();
+        const coincideTermo = !termo || textoCompleto.includes(termo);
+        const coincideCategoria = !categoria || v.categoria === categoria;
+        return coincideTermo && coincideCategoria;
+      });
+
+      // Ordenação
+      if (ordenacao === "preco-asc") {
+        filtrados.sort((a, b) => a.preco - b.preco);
+      } else if (ordenacao === "preco-desc") {
+        filtrados.sort((a, b) => b.preco - a.preco);
+      } else if (ordenacao === "km-asc") {
+        filtrados.sort((a, b) => a.km - b.km);
+      } else {
+        // Recentes
+        filtrados.sort((a, b) => new Date(b.dataCadastro || 0) - new Date(a.dataCadastro || 0));
+      }
+
+      const totalFiltrosAtivos = termo || categoria;
+      btnLimpar.style.display = totalFiltrosAtivos ? "inline-block" : "none";
+
+      renderizar(filtrados);
+    }
+
+    function renderizar(lista) {
+      if (lista.length === 0) {
+        grid.style.display = "none";
+        estadoVazio.style.display = "block";
+        contagemElem.textContent = "0 veículos encontrados";
+        return;
+      }
+
+      grid.style.display = "grid";
+      estadoVazio.style.display = "none";
+      contagemElem.textContent = `${lista.length} ${lista.length === 1 ? 'veículo disponível' : 'veículos disponíveis'}`;
+
+      grid.innerHTML = lista.map(v => `
+        <div class="card-showcase">
+          <div class="card-media">
+            <img src="${v.imagemUrl || 'assets/images/corolla.svg'}" alt="${v.nome}" loading="lazy">
+          </div>
+          <div class="card-body">
+            <span class="card-eyebrow">${v.categoria || 'Seminovo'}</span>
+            <h2 class="card-title">${v.nome}</h2>
+            <div class="card-specs">
+              <span class="spec-chip">${v.ano || ''}</span>
+              <span class="spec-chip">${formatarKm(v.km)}</span>
+              <span class="spec-chip">${v.cambio || ''}</span>
+            </div>
+            <div class="card-price-box">
+              <div>
+                <span class="card-price-label">Preço</span>
+                <div class="card-price-value">${formatarMoeda(v.preco)}</div>
+              </div>
+              <a href="veiculo.html?id=${v.id}" class="btn-pill-primary btn-pill-sm">Ver detalhes</a>
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function limparFiltros() {
+      inputBusca.value = "";
+      selectCategoria.value = "";
+      selectOrdenacao.value = "recentes";
+      aplicarFiltros();
+    }
+
+    inputBusca.addEventListener("input", aplicarFiltros);
+    selectCategoria.addEventListener("change", aplicarFiltros);
+    selectOrdenacao.addEventListener("change", aplicarFiltros);
+    btnLimpar.addEventListener("click", limparFiltros);
+    btnRedefinir.addEventListener("click", limparFiltros);
+
+    document.addEventListener("DOMContentLoaded", carregarCatalogo);
+  </script>
+</body>
+</html>

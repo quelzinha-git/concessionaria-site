@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sobre o Projeto — Rota Motores</title>
+  <meta name="description" content="Conheça a história e os fundamentos acadêmicos da Rota Motores, projeto desenvolvido para o IFPB Campus Sousa.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/design-system.css">
+  <style>
+    .company-facts {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-12);
+      font-size: var(--text-body-sm);
+      line-height: var(--leading-body-sm);
+    }
+    .company-facts li {
+      flex-wrap: wrap;
+      gap: var(--spacing-4) var(--spacing-12);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Barra de Navegação Global Fixa -->
+  <header class="global-nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand" aria-label="Rota Motores Página Inicial">
+        <img src="assets/images/logo.svg" alt="" class="nav-brand-icon">
+        <span>Rota Motores</span>
+      </a>
+
+      <nav class="nav-menu" aria-label="Navegação Principal">
+        <div class="nav-item"><a href="index.html">Início</a></div>
+        <div class="nav-item"><a href="estoque.html">Estoque</a></div>
+        <div class="nav-item"><a href="financiamento.html">Financiamento</a></div>
+        <div class="nav-item active"><a href="sobre.html">Sobre</a></div>
+        <div class="nav-item"><a href="contato.html">Contato</a></div>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="admin.html" class="nav-btn-admin">Gestão</a>
+        <button type="button" class="nav-toggle" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="mobile-nav">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Drawer de Navegação Mobile -->
+  <nav id="mobile-nav" class="mobile-nav-drawer" aria-label="Menu Mobile">
+    <a href="index.html">Início</a>
+    <a href="estoque.html">Estoque</a>
+    <a href="financiamento.html">Financiamento</a>
+    <a href="sobre.html">Sobre</a>
+    <a href="contato.html">Contato</a>
+    <a href="admin.html">Painel de Gestão</a>
+  </nav>
+
+  <main>
+    <!-- Seção Topo / Hero Institucional (Faixa Branca) -->
+    <section class="section section-compact section-white text-center">
+      <div class="container-narrow">
+        <span class="section-eyebrow">Projeto Acadêmico IFPB Campus Sousa</span>
+        <h1 class="text-heading-lg" style="margin-bottom: 20px;">Uma vitrine para explorar</h1>
+        <p class="text-body color-mid-gray text-center" style="margin-bottom: 40px;">
+          Rota Motores é uma concessionária fictícia criada como projeto acadêmico da disciplina de Desenvolvimento de Aplicações Web, unindo catálogo moderno, ficha técnica e simulação de financiamento.
+        </p>
+
+        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+          <a href="estoque.html" class="btn-pill-primary">Consultar estoque</a>
+          <a href="admin.html" class="btn-pill-ghost">Abrir painel de gestão</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção Detalhes e Identidade (Faixa Canvas) -->
+    <section class="section section-canvas">
+      <div class="container">
+        <div class="grid-2" style="margin-bottom: 48px;">
+          
+          <div class="card-showcase">
+            <span class="section-eyebrow">Fundamentação</span>
+            <h2 class="text-heading-sm" style="margin-bottom: 16px;">Origem e Proposta</h2>
+            <p class="text-body-sm color-deep-gray" style="line-height: 1.6; margin-bottom: 16px;">
+              O projeto atende ao Tema 9 (Concessionária / Loja de Automóveis) da lista de temas práticos do IFPB Campus Sousa. Inspirando-se no método de levantamento orientado a negócios didáticos, o ecossistema foi estruturado para demonstrar fluxos de navegação reais, independência de páginas e armazenamento reativo.
+            </p>
+            <p class="text-body-sm color-mid-gray" style="line-height: 1.6;">
+              A proposta de valor é integrar filtro de estoque, ficha individual por ID e simulação de financiamento em uma experiência suave com persistência de dados no navegador.
+            </p>
+          </div>
+
+          <div class="card-showcase">
+            <span class="section-eyebrow">Ficha Cadastral</span>
+            <h2 class="text-heading-sm" style="margin-bottom: 16px;">Dados da Matriz</h2>
+            <ul class="company-facts">
+              <li style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--color-cool-wash); padding-bottom: 8px;">
+                <span class="color-mid-gray">Nome Comercial:</span>
+                <strong>Rota Motores</strong>
+              </li>
+              <li style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--color-cool-wash); padding-bottom: 8px;">
+                <span class="color-mid-gray">Segmento:</span>
+                <strong>Seminovos e Financiamento</strong>
+              </li>
+              <li style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--color-cool-wash); padding-bottom: 8px;">
+                <span class="color-mid-gray">Localidade:</span>
+                <strong>Sousa, Paraíba</strong>
+              </li>
+              <li style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--color-cool-wash); padding-bottom: 8px;">
+                <span class="color-mid-gray">Início das Atividades:</span>
+                <strong>10 de novembro de 2026</strong>
+              </li>
+              <li style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--color-cool-wash); padding-bottom: 8px;">
+                <span class="color-mid-gray">Situação Cadastral:</span>
+                <span style="color: var(--color-success); font-weight: 600;">Ativa (Demonstração)</span>
+              </li>
+              <li style="display: flex; justify-content: space-between;">
+                <span class="color-mid-gray">Canal Social:</span>
+                <span class="color-blue">@rotamotores</span>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- Card de Demonstração Técnica -->
+        <div class="panel-surface">
+          <span class="section-eyebrow">Arquitetura Técnica</span>
+          <h2 class="text-heading-sm" style="margin-bottom: 16px;">Como esta aplicação funciona</h2>
+          <div class="grid-3" style="margin-top: 24px;">
+            <div>
+              <h3 class="text-subheading" style="font-size: 18px; margin-bottom: 8px;">1. Arquivos Estáticos</h3>
+              <p class="text-caption color-mid-gray" style="line-height: 1.5;">
+                Páginas HTML independentes servidas a partir da pasta <code>site/</code>, preparadas para publicação estática contínua (GitHub para Render).
+              </p>
+            </div>
+            <div>
+              <h3 class="text-subheading" style="font-size: 18px; margin-bottom: 8px;">2. IndexedDB Nativo</h3>
+              <p class="text-caption color-mid-gray" style="line-height: 1.5;">
+                Persistência local completa para veículos e uploads de fotos em Base64, preservando alterações após recarregar a aba ou fechar o navegador.
+              </p>
+            </div>
+            <div>
+              <h3 class="text-subheading" style="font-size: 18px; margin-bottom: 8px;">3. Design System Preciso</h3>
+              <p class="text-caption color-mid-gray" style="line-height: 1.5;">
+                Identidade visual orientada ao estilo Apple com cantos suaves de 28px, botões pílula, zero sombras e paleta monocromática com azul elétrico.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Rodapé Global -->
+  <footer class="global-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-brand-title">Rota Motores</div>
+          <p class="text-caption color-mid-gray">
+            Concessionária fictícia de seminovos ambientada em Sousa, PB. Projeto acadêmico de Desenvolvimento de Aplicações Web.
+          </p>
+        </div>
+
+        <div class="footer-links">
+          <div class="footer-links-group">
+            <h4>Navegação</h4>
+            <a href="index.html">Início</a>
+            <a href="estoque.html">Estoque</a>
+            <a href="financiamento.html">Financiamento</a>
+            <a href="sobre.html">Sobre o Projeto</a>
+            <a href="contato.html">Contato</a>
+          </div>
+
+          <div class="footer-links-group">
+            <h4>Gestão</h4>
+            <a href="admin.html">Painel Administrativo</a>
+            <a href="login.html">Login Gestor</a>
+          </div>
+
+          <div class="footer-links-group">
+            <h4>Atendimento Ilustrativo</h4>
+            <span class="text-caption color-mid-gray">Sousa, Paraíba</span>
+            <span class="text-caption color-mid-gray">contato@rotamotores.example</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-notice">
+          Projeto acadêmico · Veículos e valores demonstrativos · IFPB Campus Sousa
+        </div>
+        <div>
+          © 2026 Rota Motores. Todos os direitos reservados.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="js/nav.mjs"></script>
+</body>
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rota Motores — Seu próximo carro começa aqui</title>
+  <meta name="description" content="Concessionária de seminovos em Sousa, PB. Encontre seu próximo carro, compare detalhes e simule parcelas de financiamento com transparência.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/design-system.css">
+</head>
+<body class="home-page">
+
+  <!-- Barra de Navegação Global Fixa -->
+  <header class="global-nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand" aria-label="Rota Motores Página Inicial">
+        <img src="assets/images/logo.svg" alt="" class="nav-brand-icon">
+        <span>Rota Motores</span>
+      </a>
+
+      <nav class="nav-menu" aria-label="Navegação Principal">
+        <div class="nav-item active"><a href="index.html">Início</a></div>
+        <div class="nav-item"><a href="estoque.html">Estoque</a></div>
+        <div class="nav-item"><a href="financiamento.html">Financiamento</a></div>
+        <div class="nav-item"><a href="sobre.html">Sobre</a></div>
+        <div class="nav-item"><a href="contato.html">Contato</a></div>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="admin.html" class="nav-btn-admin">Gestão</a>
+        <button type="button" class="nav-toggle" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="mobile-nav">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Drawer de Navegação Mobile -->
+  <nav id="mobile-nav" class="mobile-nav-drawer" aria-label="Menu Mobile">
+    <a href="index.html">Início</a>
+    <a href="estoque.html">Estoque</a>
+    <a href="financiamento.html">Financiamento</a>
+    <a href="sobre.html">Sobre</a>
+    <a href="contato.html">Contato</a>
+    <a href="admin.html">Painel de Gestão</a>
+  </nav>
+
+  <main>
+    <!-- Seção Hero — "Cathedral of white space" -->
+    <section class="section section-hero section-white text-center">
+      <div class="container">
+        <span class="section-eyebrow">Seminovos Selecionados em Sousa</span>
+        <h1 class="text-display home-hero-title">
+          Seu próximo carro começa aqui.
+        </h1>
+        <p class="text-body-sm color-mid-gray home-hero-copy">
+          Encontre um carro para a sua rotina, compare os detalhes técnicos e veja como ele caberia no seu orçamento com condições transparentes.
+        </p>
+
+        <div class="home-hero-actions">
+          <a href="estoque.html" class="btn-pill-primary">Explorar estoque</a>
+          <a href="financiamento.html" class="btn-pill-ghost">Simular parcelas</a>
+        </div>
+
+        <!-- Imagem Hero em Destaque -->
+        <div class="home-hero-media">
+          <img src="assets/images/corolla.svg" alt="Toyota Corolla GLi em destaque na vitrine Rota Motores">
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção Catálogo em Destaque (Faixa Canvas) -->
+    <section class="section section-canvas">
+      <div class="container">
+        <div class="section-header home-catalog-header">
+          <div>
+            <span class="badge-nuevo">Novidades</span>
+            <h2 class="section-title">Recém-chegados ao estoque</h2>
+            <p class="section-desc">Modelos inspecionados com laudo cautelar aprovado e garantia de procedência.</p>
+          </div>
+          <a href="estoque.html" class="arrow-link">Ver catálogo completo <span class="arrow" aria-hidden="true">→</span></a>
+        </div>
+
+        <!-- Grid de Cards de Destaque -->
+        <div class="grid-3" id="recentes-grid">
+          <!-- Renderizado via JS dinamicamente a partir do IndexedDB -->
+          <div class="card-showcase">
+            <div class="card-media">
+              <img src="assets/images/corolla.svg" alt="Toyota Corolla GLi">
+            </div>
+            <div class="card-body">
+              <span class="card-eyebrow">Sedan</span>
+              <h3 class="card-title">Toyota Corolla GLi</h3>
+              <div class="card-specs">
+                <span class="spec-chip">2022/2023</span>
+                <span class="spec-chip">34.000 km</span>
+                <span class="spec-chip">Automático</span>
+              </div>
+              <div class="card-price-box">
+                <div>
+                  <span class="card-price-label">Preço</span>
+                  <div class="card-price-value">R$ 124.900,00</div>
+                </div>
+                <a href="veiculo.html?id=1" class="arrow-link">Ver detalhes <span class="arrow" aria-hidden="true">→</span></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-showcase">
+            <div class="card-media">
+              <img src="assets/images/renegade.svg" alt="Jeep Renegade Sport">
+            </div>
+            <div class="card-body">
+              <span class="card-eyebrow">SUV</span>
+              <h3 class="card-title">Jeep Renegade Sport</h3>
+              <div class="card-specs">
+                <span class="spec-chip">2021/2022</span>
+                <span class="spec-chip">42.500 km</span>
+                <span class="spec-chip">Automático</span>
+              </div>
+              <div class="card-price-box">
+                <div>
+                  <span class="card-price-label">Preço</span>
+                  <div class="card-price-value">R$ 98.500,00</div>
+                </div>
+                <a href="veiculo.html?id=2" class="arrow-link">Ver detalhes <span class="arrow" aria-hidden="true">→</span></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-showcase">
+            <div class="card-media">
+              <img src="assets/images/argo.svg" alt="Fiat Argo Drive">
+            </div>
+            <div class="card-body">
+              <span class="card-eyebrow">Hatch</span>
+              <h3 class="card-title">Fiat Argo Drive</h3>
+              <div class="card-specs">
+                <span class="spec-chip">2023/2023</span>
+                <span class="spec-chip">21.000 km</span>
+                <span class="spec-chip">Manual</span>
+              </div>
+              <div class="card-price-box">
+                <div>
+                  <span class="card-price-label">Preço</span>
+                  <div class="card-price-value">R$ 68.900,00</div>
+                </div>
+                <a href="veiculo.html?id=3" class="arrow-link">Ver detalhes <span class="arrow" aria-hidden="true">→</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção Financiamento Showcase (Faixa Branca) -->
+    <section class="section section-white">
+      <div class="container">
+        <div class="split-layout home-finance">
+          <div>
+            <span class="section-eyebrow">Simulação Descomplicada</span>
+            <h2 class="text-heading-sm">
+              Planeje suas parcelas antes de conversar.
+            </h2>
+            <p class="text-body-sm color-mid-gray">
+              Calcule a estimativa do seu investimento com taxa fixa de 1,49% ao mês. Ajuste a entrada, escolha o prazo de 12 a 60 meses e encontre o valor de parcela ideal para o seu orçamento.
+            </p>
+            <div class="home-finance-actions">
+              <a href="financiamento.html" class="btn-pill-primary">Abrir simulador</a>
+              <span class="text-caption color-mid-gray">Taxa demonstrativa 1,49% a.m.</span>
+            </div>
+          </div>
+          <div>
+            <div class="panel-surface home-finance-example">
+              <div class="section-eyebrow">Exemplo de Simulação</div>
+              <div class="card-title">Toyota Corolla GLi</div>
+              <div class="home-finance-row text-body-sm">
+                <span class="color-mid-gray">Entrada (30%)</span>
+                <strong>R$ 37.470,00</strong>
+              </div>
+              <div class="home-finance-row text-body-sm">
+                <span class="color-mid-gray">Prazo</span>
+                <strong>48 parcelas</strong>
+              </div>
+              <div class="home-finance-row home-finance-total text-body">
+                <span class="color-deep-gray">Parcela estimada</span>
+                <strong>R$ 2.571,18</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção Pilares de Confiança (Faixa Canvas) -->
+    <section class="section section-canvas">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Diferenciais Rota Motores</span>
+          <h2 class="section-title">Comprar seminovo com tranquilidade</h2>
+          <p class="section-desc">
+            Reunimos preço real, transparência mecânica e atendimento respeitoso em Sousa, PB.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card-showcase">
+            <div class="home-feature-number">01</div>
+            <h3 class="card-title">Laudo Cautelar</h3>
+            <p class="text-body-sm color-mid-gray">Todos os modelos passam por inspeção de estrutura, chassi, motor e histórico de sinistros.</p>
+          </div>
+
+          <div class="card-showcase">
+            <div class="home-feature-number">02</div>
+            <h3 class="card-title">Transparência Total</h3>
+            <p class="text-body-sm color-mid-gray">Quilometragem real registrada, fotos de alta definição e descrição honesta de cada detalhe do veículo.</p>
+          </div>
+
+          <div class="card-showcase">
+            <div class="home-feature-number">03</div>
+            <h3 class="card-title">Simulação Direta</h3>
+            <p class="text-body-sm color-mid-gray">Simule livremente diferentes cenários de entrada e prazo sem obrigação de informar dados pessoais.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Rodapé Global -->
+  <footer class="global-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-brand-title">Rota Motores</div>
+          <p class="text-caption color-mid-gray">
+            Concessionária fictícia de seminovos ambientada em Sousa, PB. Projeto acadêmico de Desenvolvimento de Aplicações Web.
+          </p>
+        </div>
+
+        <div class="footer-links">
+          <div class="footer-links-group">
+            <h4>Navegação</h4>
+            <a href="index.html">Início</a>
+            <a href="estoque.html">Estoque</a>
+            <a href="financiamento.html">Financiamento</a>
+            <a href="sobre.html">Sobre o Projeto</a>
+            <a href="contato.html">Contato</a>
+          </div>
+
+          <div class="footer-links-group">
+            <h4>Gestão</h4>
+            <a href="admin.html">Painel Administrativo</a>
+            <a href="login.html">Login Gestor</a>
+          </div>
+
+          <div class="footer-links-group">
+            <h4>Atendimento Ilustrativo</h4>
+            <span class="text-caption color-mid-gray">Sousa, Paraíba</span>
+            <span class="text-caption color-mid-gray">contato@rotamotores.example</span>
+            <span class="text-caption color-mid-gray">Instagram: @rotamotores</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-notice">
+          Projeto acadêmico · Veículos e valores demonstrativos · IFPB Campus Sousa
+        </div>
+        <div>
+          © 2026 Rota Motores. Todos os direitos reservados.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="js/nav.mjs"></script>
+  <script type="module">
+    import { listarVeiculos } from "./js/db.mjs";
+    import { formatarMoeda, formatarKm } from "./js/formatters.mjs";
+
+    async function carregarRecentes() {
+      try {
+        const veiculos = await listarVeiculos();
+        const grid = document.getElementById("recentes-grid");
+        if (!grid || !veiculos || veiculos.length === 0) return;
+
+        // Pega os 3 mais recentes (ordenados por dataCadastro decrescente ou id)
+        const recentes = [...veiculos]
+          .sort((a, b) => new Date(b.dataCadastro || 0) - new Date(a.dataCadastro || 0))
+          .slice(0, 3);
+
+        grid.innerHTML = recentes.map(v => `
+          <div class="card-showcase">
+            <div class="card-media">
+              <img src="${v.imagemUrl || 'assets/images/corolla.svg'}" alt="${v.nome}">
+            </div>
+            <div class="card-body">
+              <span class="card-eyebrow">${v.categoria || 'Seminovo'}</span>
+              <h3 class="card-title">${v.nome}</h3>
+              <div class="card-specs">
+                <span class="spec-chip">${v.ano || ''}</span>
+                <span class="spec-chip">${formatarKm(v.km)}</span>
+                <span class="spec-chip">${v.cambio || ''}</span>
+              </div>
+              <div class="card-price-box">
+                <div>
+                  <span class="card-price-label">Preço</span>
+                  <div class="card-price-value">${formatarMoeda(v.preco)}</div>
+                </div>
+                <a href="veiculo.html?id=${v.id}" class="arrow-link">Ver detalhes <span class="arrow" aria-hidden="true">→</span></a>
+              </div>
+            </div>
+          </div>
+        `).join("");
+      } catch (err) {
+        console.error("Erro ao carregar recentes:", err);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", carregarRecentes);
+  </script>
+</body>
+</html>

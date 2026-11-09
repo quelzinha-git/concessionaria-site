@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contato e Atendimento — Rota Motores</title>
+  <meta name="description" content="Demonstração do canal de atendimento da Rota Motores em Sousa, PB. Visualize sua mensagem diretamente na página.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/design-system.css">
+</head>
+<body>
+
+  <!-- Barra de Navegação Global Fixa -->
+  <header class="global-nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand" aria-label="Rota Motores Página Inicial">
+        <img src="assets/images/logo.svg" alt="" class="nav-brand-icon">
+        <span>Rota Motores</span>
+      </a>
+
+      <nav class="nav-menu" aria-label="Navegação Principal">
+        <div class="nav-item"><a href="index.html">Início</a></div>
+        <div class="nav-item"><a href="estoque.html">Estoque</a></div>
+        <div class="nav-item"><a href="financiamento.html">Financiamento</a></div>
+        <div class="nav-item"><a href="sobre.html">Sobre</a></div>
+        <div class="nav-item active"><a href="contato.html">Contato</a></div>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="admin.html" class="nav-btn-admin">Gestão</a>
+        <button type="button" class="nav-toggle" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="mobile-nav">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Drawer de Navegação Mobile -->
+  <nav id="mobile-nav" class="mobile-nav-drawer" aria-label="Menu Mobile">
+    <a href="index.html">Início</a>
+    <a href="estoque.html">Estoque</a>
+    <a href="financiamento.html">Financiamento</a>
+    <a href="sobre.html">Sobre</a>
+    <a href="contato.html">Contato</a>
+    <a href="admin.html">Painel de Gestão</a>
+  </nav>
+
+  <main>
+    <!-- Topo da Página (Faixa Branca) -->
+    <section class="section section-compact section-white">
+      <div class="container">
+        <span class="section-eyebrow">Atendimento Local</span>
+        <h1 class="text-heading" style="margin-bottom: 12px;">Como podemos ajudar?</h1>
+        <p class="text-body-sm color-mid-gray" style="max-width: 640px;">
+          Experimente o atendimento da concessionária em uma demonstração local. Envie uma mensagem e veja a prévia instantânea aqui mesmo.
+        </p>
+      </div>
+    </section>
+
+    <!-- Seção de Canais e Formulário (Faixa Canvas) -->
+    <section class="section section-canvas" style="padding-top: 40px;">
+      <div class="container">
+        <div class="split-layout">
+          
+          <!-- Formulário -->
+          <div class="panel-surface">
+            <h2 class="text-subheading" style="margin-bottom: 24px;">Envie uma mensagem</h2>
+
+            <form id="form-contato">
+              <div class="form-group">
+                <label for="contato-nome" class="form-label">Nome Completo</label>
+                <input type="text" id="contato-nome" class="form-input" placeholder="Ex: Maria Fernandes" required>
+              </div>
+
+              <div class="grid-2" style="gap: 0 var(--spacing-16);">
+                <div class="form-group">
+                  <label for="contato-email" class="form-label">E-mail</label>
+                  <input type="email" id="contato-email" class="form-input" placeholder="seuemail@exemplo.com" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="contato-telefone" class="form-label">Telefone / WhatsApp</label>
+                  <input type="tel" id="contato-telefone" class="form-input" placeholder="(83) 99999-0000" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="contato-assunto" class="form-label">Assunto</label>
+                <select id="contato-assunto" class="form-select" required>
+                  <option value="" disabled selected>Selecione um assunto</option>
+                  <option value="Dúvida sobre veículo do estoque">Dúvida sobre veículo</option>
+                  <option value="Proposta ou simulação de financiamento">Financiamento</option>
+                  <option value="Avaliação de seminovo na troca">Avaliação para troca</option>
+                  <option value="Outras informações">Outras informações</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="contato-mensagem" class="form-label">Mensagem</label>
+                <textarea id="contato-mensagem" class="form-textarea" placeholder="Descreva o que procura ou a sua dúvida..." required></textarea>
+              </div>
+
+              <div style="margin-top: 24px;">
+                <button type="submit" class="btn-pill-primary" style="width: 100%;">
+                  Visualizar mensagem
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Coluna Direita: Informações e Prévia da Mensagem -->
+          <div>
+            <!-- Canais Ilustrativos -->
+            <div class="panel-surface" style="margin-bottom: var(--spacing-24);">
+              <h2 class="text-subheading" style="margin-bottom: 20px;">Canais da Loja</h2>
+
+              <div style="display: flex; flex-direction: column; gap: 16px; font-size: var(--text-body-sm);">
+                <div>
+                  <div class="text-micro color-mid-gray" style="text-transform: uppercase;">Endereço Fictício</div>
+                  <strong>Sousa, Paraíba — Bairro Centro</strong>
+                </div>
+                <div>
+                  <div class="text-micro color-mid-gray" style="text-transform: uppercase;">Horário de Funcionamento</div>
+                  <div>Segunda a Sexta: 08:00 às 18:00</div>
+                  <div>Sábados: 08:00 às 13:00</div>
+                </div>
+                <div>
+                  <div class="text-micro color-mid-gray" style="text-transform: uppercase;">E-mail Demonstrativo</div>
+                  <div class="color-blue">atendimento@rotamotores.example</div>
+                </div>
+                <div>
+                  <div class="text-micro color-mid-gray" style="text-transform: uppercase;">Rede Social</div>
+                  <div class="color-blue">@rotamotores</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card de Prévia (Exibido após o envio) -->
+            <div id="card-previa" class="panel-surface" style="display: none;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <span class="badge-pill badge-ember">Prévia Local</span>
+                <span id="previa-data" class="text-micro color-mid-gray">Agora</span>
+              </div>
+              <h3 class="text-subheading" style="font-size: 20px; margin-bottom: 12px;" id="previa-assunto">Assunto</h3>
+              
+              <div style="background-color: var(--color-canvas); border-radius: var(--radius-lg); padding: 16px; margin-bottom: 16px; font-size: var(--text-caption);">
+                <div style="margin-bottom: 4px;"><strong>Remetente:</strong> <span id="previa-nome"></span></div>
+                <div style="margin-bottom: 4px;"><strong>E-mail:</strong> <span id="previa-email"></span></div>
+                <div><strong>Telefone:</strong> <span id="previa-telefone"></span></div>
+              </div>
+
+              <div class="text-caption color-mid-gray" style="text-transform: uppercase; margin-bottom: 6px;">Corpo da Mensagem</div>
+              <p id="previa-corpo" class="text-body-sm color-deep-gray" style="line-height: 1.5; white-space: pre-wrap; margin-bottom: 20px;">
+              </p>
+
+              <div class="alert-notice" style="margin-bottom: 0;">
+                Esta é uma prévia renderizada localmente na página para demonstração acadêmica. Nenhum dado foi enviado a servidores externos.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Rodapé Global -->
+  <footer class="global-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-brand-title">Rota Motores</div>
+          <p class="text-caption color-mid-gray">
+            Concessionária fictícia de seminovos ambientada em Sousa, PB. Projeto acadêmico de Desenvolvimento de Aplicações Web.
+          </p>
+        </div>
+
+        <div class="footer-links">
+          <div class="footer-links-group">
+            <h4>Navegação</h4>
+            <a href="index.html">Início</a>
+            <a href="estoque.html">Estoque</a>
+            <a href="financiamento.html">Financiamento</a>
+            <a href="sobre.html">Sobre o Projeto</a>
+            <a href="contato.html">Contato</a>
+          </div>
+
+          <div class="footer-links-group">
+            <h4>Gestão</h4>
+            <a href="admin.html">Painel Administrativo</a>
+            <a href="login.html">Login Gestor</a>
+          </div>
+
+          <div class="footer-links-group">
+            <h4>Atendimento Ilustrativo</h4>
+            <span class="text-caption color-mid-gray">Sousa, Paraíba</span>
+            <span class="text-caption color-mid-gray">contato@rotamotores.example</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-notice">
+          Projeto acadêmico · Veículos e valores demonstrativos · IFPB Campus Sousa
+        </div>
+        <div>
+          © 2026 Rota Motores. Todos os direitos reservados.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="js/nav.mjs"></script>
+  <script type="module">
+    const form = document.getElementById("form-contato");
+    const cardPrevia = document.getElementById("card-previa");
+    const previaNome = document.getElementById("previa-nome");
+    const previaEmail = document.getElementById("previa-email");
+    const previaTelefone = document.getElementById("previa-telefone");
+    const previaAssunto = document.getElementById("previa-assunto");
+    const previaCorpo = document.getElementById("previa-corpo");
+    const previaData = document.getElementById("previa-data");
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const nome = document.getElementById("contato-nome").value.trim();
+      const email = document.getElementById("contato-email").value.trim();
+      const telefone = document.getElementById("contato-telefone").value.trim();
+      const assunto = document.getElementById("contato-assunto").value;
+      const mensagem = document.getElementById("contato-mensagem").value.trim();
+
+      if (!nome || !email || !mensagem) return;
+
+      previaNome.textContent = nome;
+      previaEmail.textContent = email;
+      previaTelefone.textContent = telefone || "Não informado";
+      previaAssunto.textContent = assunto || "Mensagem Geral";
+      previaCorpo.textContent = mensagem;
+      previaData.textContent = new Date().toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
+
+      cardPrevia.style.display = "block";
+      cardPrevia.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  </script>
+</body>
+</html>

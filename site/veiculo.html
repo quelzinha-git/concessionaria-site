@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalhes do Veículo — Rota Motores</title>
+  <meta name="description" content="Confira a ficha técnica completa, quilometragem, fotos e condições de financiamento do veículo seminovo.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/design-system.css">
+  <style>
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: var(--spacing-32);
+    }
+    .spec-item {
+      background-color: var(--color-paper);
+      padding: 20px;
+      border-radius: var(--radius-lg);
+    }
+    .spec-item-label {
+      font-size: var(--text-micro);
+      color: var(--color-mid-gray);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+    }
+    .spec-item-value {
+      font-size: var(--text-body);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-primary-ink);
+    }
+    @media (max-width: 768px) {
+      .specs-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Barra de Navegação Global Fixa -->
+  <header class="global-nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand" aria-label="Rota Motores Página Inicial">
+        <img src="assets/images/logo.svg" alt="" class="nav-brand-icon">
+        <span>Rota Motores</span>
+      </a>
+
+      <nav class="nav-menu" aria-label="Navegação Principal">
+        <div class="nav-item"><a href="index.html">Início</a></div>
+        <div class="nav-item active"><a href="estoque.html">Estoque</a></div>
+        <div class="nav-item"><a href="financiamento.html">Financiamento</a></div>
+        <div class="nav-item"><a href="sobre.html">Sobre</a></div>
+        <div class="nav-item"><a href="contato.html">Contato</a></div>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="admin.html" class="nav-btn-admin">Gestão</a>
+        <button type="button" class="nav-toggle" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="mobile-nav">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Drawer de Navegação Mobile -->
+  <nav id="mobile-nav" class="mobile-nav-drawer" aria-label="Menu Mobile">
+    <a href="index.html">Início</a>
+    <a href="estoque.html">Estoque</a>
+    <a href="financiamento.html">Financiamento</a>
+    <a href="sobre.html">Sobre</a>
+    <a href="contato.html">Contato</a>
+    <a href="admin.html">Painel de Gestão</a>
+  </nav>
+
+  <main>
+    <!-- Área de Erro / Não Encontrado -->
+    <div id="veiculo-nao-encontrado" class="section section-white" style="display: none; padding: 100px 0; text-align: center;">
+      <div class="container-narrow">
+        <span class="section-eyebrow">Aviso</span>
+        <h1 class="text-heading" style="margin-bottom: 16px;">Veículo não encontrado</h1>
+        <p class="text-body color-mid-gray" style="margin-bottom: 32px;">
+          O registro solicitado pode ter sido excluído ou o endereço informado é inválido. Retorne ao estoque para conferir as opções disponíveis.
+        </p>
+        <a href="estoque.html" class="btn-pill-primary">Voltar ao estoque</a>
+      </div>
+    </div>
+
+    <!-- Conteúdo do Veículo -->
+    <div id="veiculo-conteudo">
+      <!-- Seção Superior do Veículo (Faixa Branca) -->
+      <section class="section section-compact section-white">
+        <div class="container">
+          <div style="margin-bottom: 24px;">
+            <a href="estoque.html" class="arrow-link">← Voltar ao estoque</a>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 20px; margin-bottom: 32px;">
+            <div>
+              <span id="veiculo-categoria" class="section-eyebrow">Categoria</span>
+              <h1 id="veiculo-nome" class="text-heading">Carregando veículo...</h1>
+            </div>
+            <div style="text-align: right;">
+              <span class="text-caption color-mid-gray">Valor à vista</span>
+              <div id="veiculo-preco" class="text-heading-sm" style="color: var(--color-primary-ink); font-weight: 700;">
+                R$ 0,00
+              </div>
+            </div>
+          </div>
+
+          <!-- Imagem Grande de Destaque -->
+          <div style="width: 100%; max-height: 540px; border-radius: var(--radius-productimages); overflow: hidden; background-color: var(--color-canvas); display: flex; align-items: center; justify-content: center;">
+            <img id="veiculo-imagem" src="assets/images/corolla.svg" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+        </div>
+      </section>
+
+      <!-- Seção Ficha Técnica e Simulação (Faixa Canvas) -->
+      <section class="section section-canvas">
+        <div class="container">
+          <div class="split-layout" style="--split-main: 1.6fr;">
+            
+            <!-- Coluna Esquerda: Especificações e Descrição -->
+            <div>
+              <h2 class="text-heading-sm" style="margin-bottom: 24px;">Ficha Técnica</h2>
+              
+              <div class="specs-grid">
+                <div class="spec-item">
+                  <div class="spec-item-label">Ano / Modelo</div>
+                  <div class="spec-item-value" id="spec-ano">—</div>
+                </div>
+                <div class="spec-item">
+                  <div class="spec-item-label">Quilometragem</div>
+                  <div class="spec-item-value" id="spec-km">—</div>
+                </div>
+                <div class="spec-item">
+                  <div class="spec-item-label">Câmbio</div>
+                  <div class="spec-item-value" id="spec-cambio">—</div>
+                </div>
+                <div class="spec-item">
+                  <div class="spec-item-label">Combustível</div>
+                  <div class="spec-item-value" id="spec-combustivel">—</div>
+                </div>
+                <div class="spec-item">
+                  <div class="spec-item-label">Cor</div>
+                  <div class="spec-item-value" id="spec-cor">—</div>
+                </div>
+                <div class="spec-item">
+                  <div class="spec-item-label">Situação</div>
+                  <div class="spec-item-value" style="color: var(--color-success);">Disponível</div>
+                </div>
+              </div>
+
+              <div class="panel-surface" style="margin-top: var(--spacing-24);">
+                <h3 class="text-subheading" style="font-size: 20px; margin-bottom: 16px;">Sobre este seminovo</h3>
+                <p id="veiculo-descricao" class="text-body-sm color-deep-gray" style="line-height: 1.6;">
+                  Carregando descrição...
+                </p>
+              </div>
+            </div>
+
+            <!-- Coluna Direita: Caixa de Decisão / Simulação -->
+            <div class="panel-surface sticky-panel">
+              <span class="badge-pill badge-cool" style="margin-bottom: 12px;">Planejamento Financeiro</span>
+              <h3 class="text-subheading" style="margin-bottom: 8px;">Gostou deste modelo?</h3>
+              <p class="text-body-sm color-mid-gray" style="margin-bottom: 24px;">
+                Veja uma estimativa real de parcelamento calculada com taxa fixa de 1,49% ao mês.
+              </p>
+
+              <div style="background-color: var(--color-canvas); border-radius: var(--radius-lg); padding: 18px; margin-bottom: 24px;">
+                <div style="font-size: var(--text-micro); text-transform: uppercase; color: var(--color-mid-gray); margin-bottom: 4px;">Preço base</div>
+                <div id="card-lateral-preco" style="font-size: var(--text-body-lg); font-weight: 700; color: var(--color-primary-ink);">R$ 0,00</div>
+              </div>
+
+              <div style="display: flex; flex-direction: column; gap: 12px;">
+                <a id="btn-simular-veiculo" href="financiamento.html" class="btn-pill-primary" style="width: 100%;">
+                  Simular este veículo
+                </a>
+                <a href="contato.html" class="btn-pill-ghost" style="width: 100%;">
+                  Falar sobre este carro
+                </a>
+              </div>
+
+              <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--color-cool-wash); font-size: var(--text-micro); color: var(--color-mid-gray); line-height: 1.4;">
+                Garantia de 90 dias de motor e câmbio. Laudo cautelar pericial disponível para consulta.
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Rodapé Global -->
+  <footer class="global-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-brand-title">Rota Motores</div>
+          <p class="text-caption color-mid-gray">
+            Concessionária fictícia de seminovos ambientada em Sousa, PB. Projeto acadêmico de Desenvolvimento de Aplicações Web.
+          </p>
+        </div>
+
+        <div class="footer-links">
+          <div class="footer-links-group">
+            <h4>Navegação</h4>
+            <a href="index.html">Início</a>
+            <a href="estoque.html">Estoque</a>
+            <a href="financiamento.html">Financiamento</a>
+            <a href="sobre.html">Sobre o Projeto</a>
+            <a href="contato.html">Contato</a>
+          </div>
+
+          <div class="footer-links-group">
+            <h4>Gestão</h4>
+            <a href="admin.html">Painel Administrativo</a>
+            <a href="login.html">Login Gestor</a>
+          </div>
+
+          <div class="footer-links-group">
+            <h4>Atendimento Ilustrativo</h4>
+            <span class="text-caption color-mid-gray">Sousa, Paraíba</span>
+            <span class="text-caption color-mid-gray">contato@rotamotores.example</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-notice">
+          Projeto acadêmico · Veículos e valores demonstrativos · IFPB Campus Sousa
+        </div>
+        <div>
+          © 2026 Rota Motores. Todos os direitos reservados.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="js/nav.mjs"></script>
+  <script type="module">
+    import { obterVeiculoPorId } from "./js/db.mjs";
+    import { formatarMoeda, formatarKm } from "./js/formatters.mjs";
+
+    async function carregarFicha() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get("id");
+
+      const divConteudo = document.getElementById("veiculo-conteudo");
+      const divErro = document.getElementById("veiculo-nao-encontrado");
+
+      if (!id) {
+        divConteudo.style.display = "none";
+        divErro.style.display = "block";
+        return;
+      }
+
+      try {
+        const veiculo = await obterVeiculoPorId(id);
+        if (!veiculo) {
+          divConteudo.style.display = "none";
+          divErro.style.display = "block";
+          return;
+        }
+
+        // Preenche dados na página
+        document.title = `${veiculo.nome} — Rota Motores`;
+        document.getElementById("veiculo-nome").textContent = veiculo.nome;
+        document.getElementById("veiculo-categoria").textContent = `Seminovos · ${veiculo.categoria || 'Geral'}`;
+        
+        const precoFormatado = formatarMoeda(veiculo.preco);
+        document.getElementById("veiculo-preco").textContent = precoFormatado;
+        document.getElementById("card-lateral-preco").textContent = precoFormatado;
+
+        const imgEl = document.getElementById("veiculo-imagem");
+        imgEl.src = veiculo.imagemUrl || "assets/images/corolla.svg";
+        imgEl.alt = veiculo.nome;
+
+        document.getElementById("spec-ano").textContent = veiculo.ano || "—";
+        document.getElementById("spec-km").textContent = formatarKm(veiculo.km);
+        document.getElementById("spec-cambio").textContent = veiculo.cambio || "—";
+        document.getElementById("spec-combustivel").textContent = veiculo.combustivel || "Flex";
+        document.getElementById("spec-cor").textContent = veiculo.cor || "—";
+        document.getElementById("veiculo-descricao").textContent = veiculo.descricao || "Sem detalhes adicionais cadastrados.";
+
+        // Link para o simulador com o ID vinculado
+        const btnSimular = document.getElementById("btn-simular-veiculo");
+        btnSimular.href = `financiamento.html?id=${veiculo.id}`;
+
+      } catch (err) {
+        console.error("Erro ao obter dados do veículo:", err);
+        divConteudo.style.display = "none";
+        divErro.style.display = "block";
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", carregarFicha);
+  </script>
+</body>
+</html>

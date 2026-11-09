@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestão de Estoque — Rota Motores</title>
+  <meta name="description" content="Painel de controle local de estoque com CRUD completo e upload de imagens no navegador.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/design-system.css">
+  <style>
+    .admin-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      background-color: var(--color-paper);
+      border-radius: var(--radius-cards);
+      overflow: hidden;
+    }
+    .admin-table th, .admin-table td {
+      padding: 16px 20px;
+      text-align: left;
+      font-size: var(--text-caption);
+      border-bottom: 1px solid var(--color-cool-wash);
+    }
+    .admin-table th {
+      background-color: #fafafc;
+      font-size: var(--text-micro);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-mid-gray);
+      font-weight: var(--font-weight-semibold);
+    }
+    .admin-table tr:last-child td {
+      border-bottom: none;
+    }
+    .admin-thumb {
+      width: 64px;
+      height: 44px;
+      border-radius: 8px;
+      object-fit: cover;
+      background-color: var(--color-canvas);
+    }
+    .action-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      justify-content: flex-end;
+    }
+    .admin-form-row {
+      display: grid;
+      grid-template-columns: minmax(0, var(--first-field, 1fr)) minmax(0, 1fr);
+      column-gap: var(--spacing-20);
+    }
+    .admin-form-row-four {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    #secao-formulario {
+      scroll-margin-top: var(--nav-height);
+    }
+    .btn-action-edit {
+      font-size: var(--text-micro);
+      padding: 6px 12px;
+      border-radius: var(--radius-smallbuttons);
+      background-color: var(--color-cool-wash);
+      color: var(--color-primary-ink);
+      font-weight: 500;
+    }
+    .btn-action-edit:hover {
+      background-color: var(--color-hairline);
+    }
+    .btn-action-del {
+      font-size: var(--text-micro);
+      padding: 6px 12px;
+      border-radius: var(--radius-smallbuttons);
+      background-color: var(--color-ember-soft);
+      color: var(--color-ember);
+      font-weight: 500;
+    }
+    .btn-action-del:hover {
+      background-color: #fcd7c3;
+    }
+    @media (max-width: 1024px) {
+      .admin-form-row-four {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    @media (max-width: 900px) {
+      .admin-table, .admin-table tbody {
+        display: block;
+      }
+      .admin-table thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+      }
+      .admin-table tbody tr {
+        display: grid;
+        padding: var(--card-padding);
+        border-bottom: 1px solid var(--color-cool-wash);
+      }
+      .admin-table tbody tr:last-child {
+        border-bottom: none;
+      }
+      .admin-table td {
+        padding: var(--spacing-8) 0;
+        border-bottom: none;
+      }
+      .admin-table td[data-label]::before {
+        content: attr(data-label);
+        display: block;
+        margin-bottom: var(--spacing-4);
+        color: var(--color-mid-gray);
+        font-size: var(--text-micro);
+      }
+      .admin-table .action-group {
+        justify-content: flex-start;
+      }
+      .action-group button, .action-group a {
+        display: inline-flex;
+        align-items: center;
+        padding-inline: var(--spacing-12);
+        min-height: var(--spacing-44);
+      }
+    }
+    @media (max-width: 540px) {
+      .admin-form-row, .admin-form-row-four {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Barra de Navegação Global Fixa -->
+  <header class="global-nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand" aria-label="Rota Motores Página Inicial">
+        <img src="assets/images/logo.svg" alt="" class="nav-brand-icon">
+        <span>Rota Motores</span>
+      </a>
+
+      <nav class="nav-menu" aria-label="Navegação Principal">
+        <div class="nav-item"><a href="index.html">Início</a></div>
+        <div class="nav-item"><a href="estoque.html">Estoque</a></div>
+        <div class="nav-item"><a href="financiamento.html">Financiamento</a></div>
+        <div class="nav-item"><a href="sobre.html">Sobre</a></div>
+        <div class="nav-item"><a href="contato.html">Contato</a></div>
+      </nav>
+
+      <div class="nav-actions">
+        <span class="text-micro color-mid-gray" style="margin-right: 4px;">Sessão: <strong>admin</strong></span>
+        <button id="btn-logout" class="hairline-link" style="background: none; border: none; cursor: pointer; padding: 4px 6px;">
+          Sair
+        </button>
+        <button type="button" class="nav-toggle" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="mobile-nav">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Drawer de Navegação Mobile -->
+  <nav id="mobile-nav" class="mobile-nav-drawer" aria-label="Menu Mobile">
+    <a href="index.html">Início</a>
+    <a href="estoque.html">Estoque</a>
+    <a href="financiamento.html">Financiamento</a>
+    <a href="sobre.html">Sobre</a>
+    <a href="contato.html">Contato</a>
+    <a href="admin.html" class="active">Painel de Gestão</a>
+    <a href="#" id="mobile-btn-logout" style="color: var(--color-ember);">Encerrar Sessão</a>
+  </nav>
+
+  <main>
+    <!-- Topo da Seção de Gestão (Faixa Branca) -->
+    <section class="section section-compact section-white">
+      <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 20px;">
+          <div>
+            <span class="section-eyebrow">Painel de Controle Local</span>
+            <h1 class="text-heading" style="margin-bottom: 8px;">Gestão de estoque</h1>
+            <p class="text-body-sm color-mid-gray" style="max-width: 600px;">
+              Cadastre, edite e exclua veículos. Os registros e fotos ficam armazenados neste navegador via IndexedDB.
+            </p>
+          </div>
+          <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <button id="btn-abrir-novo" class="btn-pill-primary">
+              + Novo veículo
+            </button>
+            <button id="btn-restaurar-padrao" class="btn-pill-ghost btn-pill-sm">
+              Restaurar estoque padrão
+            </button>
+          </div>
+        </div>
+
+        <!-- Alertas Dinâmicos -->
+        <div id="admin-alerta" class="alert-notice alert-success" style="display: none; margin-top: 24px;"></div>
+      </div>
+    </section>
+
+    <!-- Formulário de Cadastro / Edição (Faixa Canvas) -->
+    <section id="secao-formulario" class="section section-compact section-canvas" style="display: none; padding-bottom: 40px;">
+      <div class="container">
+        <div style="background-color: var(--color-paper); border-radius: var(--radius-cards); padding: 40px;">
+          <div style="display: flex; flex-wrap: wrap; gap: var(--spacing-12); justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <div>
+              <span id="form-modo-badge" class="badge-pill badge-cool">Novo Registro</span>
+              <h2 id="form-titulo" class="text-subheading" style="margin-top: 6px;">Cadastrar Veículo</h2>
+            </div>
+            <button id="btn-cancelar-edicao" class="btn-pill-ghost btn-pill-sm">Cancelar</button>
+          </div>
+
+          <form id="form-veiculo" novalidate>
+            <input type="hidden" id="veiculo-id" value="">
+            <input type="hidden" id="veiculo-foto-atual" value="">
+
+            <div class="admin-form-row" style="--first-field: 2fr;">
+              <div class="form-group">
+                <label for="campo-nome" class="form-label">Nome do Veículo *</label>
+                <input type="text" id="campo-nome" class="form-input" placeholder="Ex: Honda Civic EXL" required>
+              </div>
+
+              <div class="form-group">
+                <label for="campo-categoria" class="form-label">Categoria *</label>
+                <select id="campo-categoria" class="form-select" required>
+                  <option value="Sedan">Sedan</option>
+                  <option value="SUV">SUV</option>
+                  <option value="Hatch">Hatch</option>
+                  <option value="Picape">Picape</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="admin-form-row admin-form-row-four">
+              <div class="form-group">
+                <label for="campo-preco" class="form-label">Preço (R$) *</label>
+                <input type="number" id="campo-preco" class="form-input" placeholder="85000" min="100" required>
+              </div>
+
+              <div class="form-group">
+                <label for="campo-ano" class="form-label">Ano / Modelo *</label>
+                <input type="text" id="campo-ano" class="form-input" placeholder="2022/2023" required>
+              </div>
+
+              <div class="form-group">
+                <label for="campo-km" class="form-label">Quilometragem (km) *</label>
+                <input type="number" id="campo-km" class="form-input" placeholder="35000" min="0" required>
+              </div>
+
+              <div class="form-group">
+                <label for="campo-cambio" class="form-label">Câmbio *</label>
+                <select id="campo-cambio" class="form-select" required>
+                  <option value="" disabled selected>Selecione o câmbio</option>
+                  <option>Manual</option>
+                  <option>Automático</option>
+                  <option>Automático CVT</option>
+                  <option>Automático 6 marchas</option>
+                  <option>Automatizado</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="admin-form-row">
+              <div class="form-group">
+                <label for="campo-combustivel" class="form-label">Combustível</label>
+                <select id="campo-combustivel" class="form-select">
+                  <option selected>Flex</option>
+                  <option>Gasolina</option>
+                  <option>Etanol</option>
+                  <option>Diesel</option>
+                  <option>Híbrido</option>
+                  <option>Elétrico</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="campo-cor" class="form-label">Cor</label>
+                <input type="text" id="campo-cor" class="form-input" placeholder="Prata">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="campo-descricao" class="form-label">Descrição Técnica e Opcionais</label>
+              <textarea id="campo-descricao" class="form-textarea" placeholder="Descreva os itens de série, revisões, laudo cautelar e opcionais do veículo..."></textarea>
+            </div>
+
+            <!-- Upload e Gerenciamento de Foto -->
+            <div class="form-group">
+              <label class="form-label">Foto do Veículo (JPEG, PNG ou WebP até 5 MB)</label>
+              
+              <div class="upload-dropzone" id="dropzone-foto">
+                <div style="font-size: 32px; margin-bottom: 8px;">📷</div>
+                <div class="text-caption font-weight-medium">Clique para selecionar ou arraste uma foto</div>
+                <div class="text-micro color-mid-gray" style="margin-top: 4px;">Formatos aceitos: JPG, PNG, WEBP (Máximo: 5 MB)</div>
+                <input type="file" id="input-arquivo-foto" accept="image/jpeg,image/png,image/webp" style="display: none;">
+              </div>
+
+              <!-- Pré-visualização da Imagem -->
+              <div id="container-previa-foto" class="upload-preview">
+                <img id="img-previa-foto" src="" alt="Prévia da foto">
+              </div>
+
+              <div id="acoes-foto-existente" style="display: none; margin-top: 10px;">
+                <button type="button" id="btn-remover-foto" class="btn-pill-danger btn-pill-sm">
+                  Remover foto e usar ilustração padrão
+                </button>
+              </div>
+            </div>
+
+            <div id="form-msg-erro" class="alert-notice alert-error" style="display: none;"></div>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 16px; margin-top: 32px;">
+              <button type="submit" id="btn-salvar-veiculo" class="btn-pill-primary">
+                Salvar veículo
+              </button>
+              <button type="button" id="btn-cancelar-secundario" class="btn-pill-ghost">
+                Cancelar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tabela de Veículos Cadastrados (Faixa Branca) -->
+    <section class="section section-compact section-white">
+      <div class="container">
+        <div style="display: flex; flex-wrap: wrap; gap: var(--spacing-8); justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <h2 class="text-subheading" style="font-size: 22px;">Veículos Registrados</h2>
+          <span id="total-registros" class="text-caption color-mid-gray">0 veículos</span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="admin-table" role="table">
+            <thead role="rowgroup">
+              <tr role="row">
+                <th scope="col">Foto</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Categoria</th>
+                <th scope="col">Ano</th>
+                <th scope="col">Km</th>
+                <th scope="col">Preço</th>
+                <th scope="col" style="text-align: right;">Ações</th>
+              </tr>
+            </thead>
+            <tbody id="tabela-veiculos-corpo" role="rowgroup">
+              <!-- Linhas geradas via JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal de Confirmação de Exclusão -->
+  <div id="modal-excluir" class="modal-backdrop">
+    <div class="modal-card">
+      <span class="badge-pill badge-ember" style="margin-bottom: 12px;">Confirmação</span>
+      <h3 class="text-subheading" style="font-size: 22px; margin-bottom: 8px;">Excluir Veículo?</h3>
+      <p class="text-body-sm color-mid-gray" style="margin-bottom: 24px;">
+        Você tem certeza que deseja excluir <strong id="modal-nome-veiculo" style="color: var(--color-primary-ink);"></strong> do estoque local? Esta ação não pode ser desfeita.
+      </p>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-end;">
+        <button id="modal-btn-cancelar" class="btn-pill-ghost">Cancelar</button>
+        <button id="modal-btn-confirmar" class="btn-pill-danger">Excluir veículo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rodapé Global -->
+  <footer class="global-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-brand-title">Rota Motores</div>
+          <p class="text-caption color-mid-gray">
+            Concessionária fictícia de seminovos ambientada em Sousa, PB. Projeto acadêmico de Desenvolvimento de Aplicações Web.
+          </p>
+        </div>
+
+        <div class="footer-links">
+          <div class="footer-links-group">
+            <h4>Navegação</h4>
+            <a href="index.html">Início</a>
+            <a href="estoque.html">Estoque</a>
+            <a href="financiamento.html">Financiamento</a>
+            <a href="sobre.html">Sobre o Projeto</a>
+            <a href="contato.html">Contato</a>
+          </div>
+
+          <div class="footer-links-group">
+            <h4>Gestão</h4>
+            <a href="admin.html">Painel Administrativo</a>
+            <a href="login.html">Login Gestor</a>
+          </div>
+
+          <div class="footer-links-group">
+            <h4>Atendimento Ilustrativo</h4>
+            <span class="text-caption color-mid-gray">Sousa, Paraíba</span>
+            <span class="text-caption color-mid-gray">contato@rotamotores.example</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-notice">
+          Projeto acadêmico · Veículos e valores demonstrativos · IFPB Campus Sousa
+        </div>
+        <div>
+          © 2026 Rota Motores. Todos os direitos reservados.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="js/nav.mjs"></script>
+  <script type="module">
+    import { protegerRotaAdmin, fazerLogout } from "./js/auth.mjs";
+    import { listarVeiculos, obterVeiculoPorId, salvarVeiculo, excluirVeiculo, restaurarCatalogoPadrao } from "./js/db.mjs";
+    import { formatarMoeda, formatarKm } from "./js/formatters.mjs";
+
+    // 1. Protege rota imediatamente
+    protegerRotaAdmin();
+
+    // Controle de Logout
+    document.getElementById("btn-logout").addEventListener("click", () => {
+      fazerLogout();
+      window.location.href = "login.html";
+    });
+    const mobileLogout = document.getElementById("mobile-btn-logout");
+    if (mobileLogout) {
+      mobileLogout.addEventListener("click", (e) => {
+        e.preventDefault();
+        fazerLogout();
+        window.location.href = "login.html";
+      });
+    }
+
+    // Elementos DOM
+    const tabelaCorpo = document.getElementById("tabela-veiculos-corpo");
+    const totalRegistros = document.getElementById("total-registros");
+    const alerta = document.getElementById("admin-alerta");
+
+    const secaoForm = document.getElementById("secao-formulario");
+    const form = document.getElementById("form-veiculo");
+    const formTitulo = document.getElementById("form-titulo");
+    const formBadge = document.getElementById("form-modo-badge");
+    const formErro = document.getElementById("form-msg-erro");
+
+    const campoId = document.getElementById("veiculo-id");
+    const campoFotoAtual = document.getElementById("veiculo-foto-atual");
+    const campoNome = document.getElementById("campo-nome");
+    const campoCategoria = document.getElementById("campo-categoria");
+    const campoPreco = document.getElementById("campo-preco");
+    const campoAno = document.getElementById("campo-ano");
+    const campoKm = document.getElementById("campo-km");
+    const campoCambio = document.getElementById("campo-cambio");
+    const campoCombustivel = document.getElementById("campo-combustivel");
+    const campoCor = document.getElementById("campo-cor");
+    const campoDescricao = document.getElementById("campo-descricao");
+
+    const dropzoneFoto = document.getElementById("dropzone-foto");
+    const inputArquivoFoto = document.getElementById("input-arquivo-foto");
+    const containerPrevia = document.getElementById("container-previa-foto");
+    const imgPrevia = document.getElementById("img-previa-foto");
+    const acoesFotoExistente = document.getElementById("acoes-foto-existente");
+    const btnRemoverFoto = document.getElementById("btn-remover-foto");
+
+    const btnAbrirNovo = document.getElementById("btn-abrir-novo");
+    const btnCancelarEdicao = document.getElementById("btn-cancelar-edicao");
+    const btnCancelarSecundario = document.getElementById("btn-cancelar-secundario");
+    const btnRestaurarPadrao = document.getElementById("btn-restaurar-padrao");
+
+    // Modal
+    const modalExcluir = document.getElementById("modal-excluir");
+    const modalNome = document.getElementById("modal-nome-veiculo");
+    const modalBtnCancelar = document.getElementById("modal-btn-cancelar");
+    const modalBtnConfirmar = document.getElementById("modal-btn-confirmar");
+    let idParaExcluir = null;
+
+    let novaFotoBase64 = null;
+
+    // Carregar Tabela de Veículos
+    async function carregarLista() {
+      try {
+        const veiculos = await listarVeiculos();
+        totalRegistros.textContent = `${veiculos.length} veículos cadastrados`;
+
+        if (veiculos.length === 0) {
+          tabelaCorpo.innerHTML = `<tr role="row"><td role="cell" colspan="7" style="text-align: center; padding: var(--card-padding);" class="color-mid-gray">Nenhum veículo cadastrado no estoque local.</td></tr>`;
+          return;
+        }
+
+        tabelaCorpo.innerHTML = veiculos.map(v => `
+          <tr role="row">
+            <td role="cell">
+              <img src="${v.imagemUrl || 'assets/images/corolla.svg'}" alt="${v.nome}" class="admin-thumb">
+            </td>
+            <td role="cell">
+              <strong>${v.nome}</strong>
+              <div class="text-micro color-mid-gray">${v.cor || 'Cor não informada'} · ${v.combustivel || 'Flex'}</div>
+            </td>
+            <td role="cell" data-label="Categoria"><span class="badge-pill badge-cool">${v.categoria}</span></td>
+            <td role="cell" data-label="Ano">${v.ano}</td>
+            <td role="cell" data-label="Km">${formatarKm(v.km)}</td>
+            <td role="cell" data-label="Preço"><strong>${formatarMoeda(v.preco)}</strong></td>
+            <td role="cell" data-label="Ações">
+              <div class="action-group">
+                <a href="veiculo.html?id=${v.id}" target="_blank" class="hairline-link" title="Abrir ficha pública">Ver</a>
+                <button type="button" class="btn-action-edit" data-id="${v.id}">Editar</button>
+                <button type="button" class="btn-action-del" data-id="${v.id}" data-nome="${v.nome}">Excluir</button>
+              </div>
+            </td>
+          </tr>
+        `).join("");
+
+        // Adiciona listeners aos botões da tabela
+        document.querySelectorAll(".btn-action-edit").forEach(btn => {
+          btn.addEventListener("click", () => iniciarEdicao(btn.dataset.id));
+        });
+        document.querySelectorAll(".btn-action-del").forEach(btn => {
+          btn.addEventListener("click", () => abrirModalExcluir(btn.dataset.id, btn.dataset.nome));
+        });
+
+      } catch (err) {
+        console.error("Erro ao carregar lista admin:", err);
+      }
+    }
+
+    function limparFormulario() {
+      form.querySelectorAll("option[data-valor-anterior]").forEach(option => option.remove());
+      form.reset();
+    }
+
+    function selecionarValorCadastrado(campo, valor) {
+      if (valor && !Array.from(campo.options).some(option => option.value === valor)) {
+        const option = new Option(valor, valor);
+        option.dataset.valorAnterior = "";
+        campo.add(option);
+      }
+      campo.value = valor;
+    }
+
+    // Formulário: Abrir para Novo
+    function abrirFormNovo() {
+      limparFormulario();
+      campoId.value = "";
+      campoFotoAtual.value = "";
+      novaFotoBase64 = null;
+      containerPrevia.classList.remove("has-image");
+      acoesFotoExistente.style.display = "none";
+      formErro.style.display = "none";
+
+      formBadge.textContent = "Novo Registro";
+      formBadge.className = "badge-pill badge-cool";
+      formTitulo.textContent = "Cadastrar Novo Veículo";
+
+      secaoForm.style.display = "block";
+      secaoForm.scrollIntoView({ behavior: "smooth" });
+    }
+
+    // Formulário: Abrir para Edição
+    async function iniciarEdicao(id) {
+      const v = await obterVeiculoPorId(id);
+      if (!v) return;
+
+      limparFormulario();
+      campoId.value = v.id;
+      campoFotoAtual.value = v.imagemUrl || "";
+      novaFotoBase64 = null;
+      formErro.style.display = "none";
+
+      campoNome.value = v.nome || "";
+      campoCategoria.value = v.categoria || "Sedan";
+      campoPreco.value = v.preco || "";
+      campoAno.value = v.ano || "";
+      campoKm.value = v.km ?? "";
+      selecionarValorCadastrado(campoCambio, v.cambio || "");
+      selecionarValorCadastrado(campoCombustivel, v.combustivel || "Flex");
+      campoCor.value = v.cor || "";
+      campoDescricao.value = v.descricao || "";
+
+      // Tratamento da Foto
+      if (v.imagemUrl) {
+        imgPrevia.src = v.imagemUrl;
+        containerPrevia.classList.add("has-image");
+        acoesFotoExistente.style.display = "block";
+      } else {
+        containerPrevia.classList.remove("has-image");
+        acoesFotoExistente.style.display = "none";
+      }
+
+      formBadge.textContent = "Modo Edição";
+      formBadge.className = "badge-pill badge-ember";
+      formTitulo.textContent = `Editar: ${v.nome}`;
+
+      secaoForm.style.display = "block";
+      secaoForm.scrollIntoView({ behavior: "smooth" });
+    }
+
+    function fecharForm() {
+      secaoForm.style.display = "none";
+      limparFormulario();
+      novaFotoBase64 = null;
+    }
+
+    // Upload de Imagem
+    dropzoneFoto.addEventListener("click", () => inputArquivoFoto.click());
+    
+    inputArquivoFoto.addEventListener("change", (e) => {
+      const arquivo = e.target.files[0];
+      if (!arquivo) return;
+
+      // Valida tipo
+      const formatosValidos = ["image/jpeg", "image/png", "image/webp"];
+      if (!formatosValidos.includes(arquivo.type)) {
+        alert("Formato de imagem inválido. Escolha um arquivo JPEG, PNG ou WebP.");
+        return;
+      }
+
+      // Valida tamanho (máx 5 MB)
+      if (arquivo.size > 5 * 1024 * 1024) {
+        alert("Arquivo muito grande. O limite máximo permitido é de 5 MB.");
+        return;
+      }
+
+      const leitor = new FileReader();
+      leitor.onload = (event) => {
+        novaFotoBase64 = event.target.result;
+        imgPrevia.src = novaFotoBase64;
+        containerPrevia.classList.add("has-image");
+        acoesFotoExistente.style.display = "block";
+      };
+      leitor.readAsDataURL(arquivo);
+    });
+
+    btnRemoverFoto.addEventListener("click", () => {
+      novaFotoBase64 = null;
+      campoFotoAtual.value = "";
+      inputArquivoFoto.value = "";
+      containerPrevia.classList.remove("has-image");
+      acoesFotoExistente.style.display = "none";
+    });
+
+    // Submissão do Formulário (Salvar Veículo)
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      formErro.style.display = "none";
+
+      const nome = campoNome.value.trim();
+      const categoria = campoCategoria.value;
+      const preco = parseFloat(campoPreco.value);
+      const ano = campoAno.value.trim();
+      const km = parseFloat(campoKm.value);
+      const cambio = campoCambio.value.trim();
+      const combustivel = campoCombustivel.value.trim() || "Flex";
+      const cor = campoCor.value.trim() || "Não informada";
+      const descricao = campoDescricao.value.trim();
+
+      if (!nome || isNaN(preco) || !ano || isNaN(km) || !cambio) {
+        formErro.textContent = "Preencha todos os campos obrigatórios (*).";
+        formErro.style.display = "block";
+        return;
+      }
+
+      // Define a URL da foto:
+      // Se subiu nova foto, usa novaFotoBase64;
+      // Se manteve existente, usa campoFotoAtual.value;
+      // Se não tem foto, associa a ilustração padrão da categoria correspondente
+      let imagemFinal = novaFotoBase64 || campoFotoAtual.value;
+      if (!imagemFinal) {
+        if (categoria === "SUV") imagemFinal = "assets/images/renegade.svg";
+        else if (categoria === "Hatch") imagemFinal = "assets/images/argo.svg";
+        else if (categoria === "Picape") imagemFinal = "assets/images/strada.svg";
+        else imagemFinal = "assets/images/corolla.svg";
+      }
+
+      const dadosParaSalvar = {
+        nome,
+        categoria,
+        preco,
+        ano,
+        km,
+        cambio,
+        combustivel,
+        cor,
+        descricao,
+        imagemUrl: imagemFinal
+      };
+
+      if (campoId.value) {
+        dadosParaSalvar.id = Number(campoId.value);
+      }
+
+      try {
+        await salvarVeiculo(dadosParaSalvar);
+        exibirAlerta(`Veículo "${nome}" salvo com sucesso!`);
+        fecharForm();
+        await carregarLista();
+      } catch (err) {
+        console.error("Erro ao salvar:", err);
+        formErro.textContent = "Erro ao gravar no IndexedDB. Tente novamente.";
+        formErro.style.display = "block";
+      }
+    });
+
+    // Modal de Exclusão
+    function abrirModalExcluir(id, nome) {
+      idParaExcluir = id;
+      modalNome.textContent = nome;
+      modalExcluir.classList.add("open");
+    }
+
+    function fecharModalExcluir() {
+      idParaExcluir = null;
+      modalExcluir.classList.remove("open");
+    }
+
+    modalBtnCancelar.addEventListener("click", fecharModalExcluir);
+
+    modalBtnConfirmar.addEventListener("click", async () => {
+      if (!idParaExcluir) return;
+      try {
+        await excluirVeiculo(idParaExcluir);
+        fecharModalExcluir();
+        exibirAlerta("Veículo excluído do catálogo com sucesso.");
+        await carregarLista();
+      } catch (err) {
+        console.error("Erro ao excluir:", err);
+        alert("Erro ao excluir veículo.");
+      }
+    });
+
+    // Restaurar Padrão
+    btnRestaurarPadrao.addEventListener("click", async () => {
+      if (confirm("Deseja restaurar os 4 veículos originais do catálogo didático? Todas as alterações manuais serão resetadas.")) {
+        await restaurarCatalogoPadrao();
+        exibirAlerta("Estoque restaurado para o padrão inicial.");
+        await carregarLista();
+      }
+    });
+
+    function exibirAlerta(msg) {
+      alerta.textContent = msg;
+      alerta.style.display = "block";
+      setTimeout(() => {
+        alerta.style.display = "none";
+      }, 5000);
+    }
+
+    btnAbrirNovo.addEventListener("click", abrirFormNovo);
+    btnCancelarEdicao.addEventListener("click", fecharForm);
+    btnCancelarSecundario.addEventListener("click", fecharForm);
+
+    document.addEventListener("DOMContentLoaded", carregarLista);
+  </script>
+</body>
+</html>

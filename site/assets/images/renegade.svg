@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" fill="none">
+  <rect width="800" height="500" fill="#f5f5f7"/>
+  <ellipse cx="400" cy="425" rx="320" ry="16" fill="#d6d6d6" opacity="0.6"/>
+  <!-- SUV Body: Jeep Renegade Sport -->
+  <g transform="translate(60, 100)">
+    <!-- Roof Rails -->
+    <rect x="220" y="35" width="340" height="8" rx="4" fill="#1d1d1f"/>
+    <!-- Cabin & Roof (Boxy SUV) -->
+    <path d="M 210 130 L 250 50 L 580 50 L 610 130 Z" fill="#2e3642" stroke="#1d1d1f" stroke-width="2"/>
+    <!-- Windows -->
+    <path d="M 260 120 L 285 65 L 400 65 L 400 120 Z" fill="#1d1d1f" opacity="0.85"/>
+    <path d="M 415 120 L 415 65 L 515 65 L 515 120 Z" fill="#1d1d1f" opacity="0.85"/>
+    <path d="M 525 120 L 525 65 L 585 90 L 595 120 Z" fill="#1d1d1f" opacity="0.85"/>
+    <!-- Body Chassis -->
+    <path d="M 120 195 L 120 145 L 210 130 L 250 48 L 590 48 L 625 120 L 665 140 L 675 235 L 635 235 Q 615 180 530 180 Q 450 180 430 235 L 290 235 Q 270 180 185 180 Q 105 180 85 235 L 70 235 L 70 190 Z" fill="#474747" stroke="#1d1d1f" stroke-width="3"/>
+    <!-- Wheel Arch Protectors (Plastic cladding) -->
+    <path d="M 75 235 Q 95 170 185 170 Q 275 170 295 235 Z" stroke="#1d1d1f" stroke-width="12" fill="none"/>
+    <path d="M 420 235 Q 440 170 530 170 Q 620 170 640 235 Z" stroke="#1d1d1f" stroke-width="12" fill="none"/>
+    <!-- Headlight (Round iconic Jeep) & Taillight -->
+    <circle cx="95" cy="165" r="14" fill="#0071e3"/>
+    <rect x="655" y="150" width="12" height="24" rx="3" fill="#b64400"/>
+    <!-- Door lines & Handle -->
+    <path d="M 340 130 L 325 235" stroke="#1d1d1f" stroke-width="2"/>
+    <path d="M 470 130 L 460 235" stroke="#1d1d1f" stroke-width="2"/>
+    <rect x="350" y="150" width="26" height="6" rx="3" fill="#1d1d1f"/>
+    <rect x="480" y="150" width="26" height="6" rx="3" fill="#1d1d1f"/>
+    <!-- Front Wheel -->
+    <g transform="translate(145, 225)">
+      <circle cx="40" cy="40" r="54" fill="#1d1d1f"/>
+      <circle cx="40" cy="40" r="34" fill="#707070"/>
+      <circle cx="40" cy="40" r="18" fill="#e8e8ed"/>
+      <circle cx="40" cy="40" r="8" fill="#1d1d1f"/>
+    </g>
+    <!-- Rear Wheel -->
+    <g transform="translate(490, 225)">
+      <circle cx="40" cy="40" r="54" fill="#1d1d1f"/>
+      <circle cx="40" cy="40" r="34" fill="#707070"/>
+      <circle cx="40" cy="40" r="18" fill="#e8e8ed"/>
+      <circle cx="40" cy="40" r="8" fill="#1d1d1f"/>
+    </g>
+  </g>
+  <text x="400" y="470" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#707070" text-anchor="middle" letter-spacing="1">CATEGORIA SUV · JEEP RENEGADE SPORT</text>
+</svg>

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" fill="none">
+  <rect width="800" height="500" fill="#f5f5f7"/>
+  <ellipse cx="400" cy="425" rx="310" ry="15" fill="#d6d6d6" opacity="0.6"/>
+  <!-- Hatchback Body: Fiat Argo Drive -->
+  <g transform="translate(80, 130)">
+    <!-- Cabin & Roof -->
+    <path d="M 200 120 Q 250 50 360 48 L 500 52 L 530 125 Z" fill="#ffffff" stroke="#707070" stroke-width="2"/>
+    <!-- Windows -->
+    <path d="M 230 115 Q 265 62 350 62 L 350 115 Z" fill="#1d1d1f" opacity="0.85"/>
+    <path d="M 365 115 L 365 62 L 460 62 L 490 115 Z" fill="#1d1d1f" opacity="0.85"/>
+    <!-- Body Chassis (Compact Hatchback) -->
+    <path d="M 80 185 Q 90 140 180 130 L 210 120 Q 270 45 420 48 L 510 52 Q 545 100 575 140 L 585 200 L 550 215 Q 530 170 450 170 Q 370 170 350 215 L 230 215 Q 210 170 130 170 Q 60 170 40 215 L 20 205 Q 15 190 35 170 Q 55 160 80 185 Z" fill="#ffffff" stroke="#1d1d1f" stroke-width="3"/>
+    <!-- Headlight & Taillight -->
+    <path d="M 30 165 L 65 155 L 60 175 Z" fill="#0071e3"/>
+    <path d="M 570 145 L 550 145 L 555 165 Z" fill="#b64400"/>
+    <!-- Door Cut Lines & Handle -->
+    <path d="M 290 120 L 270 210" stroke="#707070" stroke-width="2"/>
+    <path d="M 410 120 L 400 210" stroke="#707070" stroke-width="2"/>
+    <rect x="300" y="140" width="24" height="5" rx="2.5" fill="#707070"/>
+    <rect x="420" y="140" width="24" height="5" rx="2.5" fill="#707070"/>
+    <!-- Front Wheel -->
+    <g transform="translate(90, 205)">
+      <circle cx="40" cy="40" r="48" fill="#1d1d1f"/>
+      <circle cx="40" cy="40" r="30" fill="#707070"/>
+      <circle cx="40" cy="40" r="14" fill="#ffffff"/>
+      <line x1="40" y1="12" x2="40" y2="68" stroke="#1d1d1f" stroke-width="2.5"/>
+      <line x1="12" y1="40" x2="68" y2="40" stroke="#1d1d1f" stroke-width="2.5"/>
+    </g>
+    <!-- Rear Wheel -->
+    <g transform="translate(410, 205)">
+      <circle cx="40" cy="40" r="48" fill="#1d1d1f"/>
+      <circle cx="40" cy="40" r="30" fill="#707070"/>
+      <circle cx="40" cy="40" r="14" fill="#ffffff"/>
+      <line x1="40" y1="12" x2="40" y2="68" stroke="#1d1d1f" stroke-width="2.5"/>
+      <line x1="12" y1="40" x2="68" y2="40" stroke="#1d1d1f" stroke-width="2.5"/>
+    </g>
+  </g>
+  <text x="400" y="470" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#707070" text-anchor="middle" letter-spacing="1">CATEGORIA HATCH · FIAT ARGO DRIVE</text>
+</svg>

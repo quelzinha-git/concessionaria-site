@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login da Gestão — Rota Motores</title>
+  <meta name="description" content="Acesso restrito ao painel administrativo da Rota Motores.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/design-system.css">
+  <style>
+    .login-wrapper {
+      min-height: calc(100dvh - var(--nav-height));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--spacing-40) var(--spacing-20);
+      background-color: var(--color-canvas);
+    }
+    .login-card {
+      background-color: var(--color-paper);
+      border-radius: var(--radius-cards);
+      padding: 48px;
+      width: 100%;
+      max-width: 440px;
+    }
+    @media (max-width: 480px) {
+      .login-card {
+        padding: 32px 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Barra de Navegação Global Fixa -->
+  <header class="global-nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand" aria-label="Rota Motores Página Inicial">
+        <img src="assets/images/logo.svg" alt="" class="nav-brand-icon">
+        <span>Rota Motores</span>
+      </a>
+
+      <nav class="nav-menu" aria-label="Navegação Principal">
+        <div class="nav-item"><a href="index.html">Início</a></div>
+        <div class="nav-item"><a href="estoque.html">Estoque</a></div>
+        <div class="nav-item"><a href="financiamento.html">Financiamento</a></div>
+        <div class="nav-item"><a href="sobre.html">Sobre</a></div>
+        <div class="nav-item"><a href="contato.html">Contato</a></div>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="index.html" class="hairline-link">Voltar ao site</a>
+        <button type="button" class="nav-toggle" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="mobile-nav">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav id="mobile-nav" class="mobile-nav-drawer" aria-label="Menu Mobile">
+    <a href="index.html">Início</a>
+    <a href="estoque.html">Estoque</a>
+    <a href="financiamento.html">Financiamento</a>
+    <a href="sobre.html">Sobre</a>
+    <a href="contato.html">Contato</a>
+  </nav>
+
+  <main class="login-wrapper">
+    <div class="login-card">
+      <div style="text-align: center; margin-bottom: 32px;">
+        <img src="assets/images/logo.svg" alt="" style="width: 48px; height: 48px; margin: 0 auto 16px;">
+        <h1 class="text-subheading" style="font-size: 26px; margin-bottom: 8px;">Painel de Gestão</h1>
+        <p class="text-caption color-mid-gray">
+          Acesso restrito para administração do estoque e demonstração do CRUD.
+        </p>
+      </div>
+
+      <div id="login-erro" class="alert-notice alert-error" style="display: none;"></div>
+
+      <form id="form-login" novalidate>
+        <div class="form-group">
+          <label for="login-usuario" class="form-label">Usuário</label>
+          <input type="text" id="login-usuario" class="form-input" placeholder="admin" autocomplete="username" required>
+        </div>
+
+        <div class="form-group">
+          <label for="login-senha" class="form-label">Senha</label>
+          <input type="password" id="login-senha" class="form-input" placeholder="••••••••" autocomplete="current-password" required>
+        </div>
+
+        <div style="margin-top: 28px;">
+          <button type="submit" class="btn-pill-primary" style="width: 100%;">
+            Entrar na Gestão
+          </button>
+        </div>
+      </form>
+
+      <!-- Instrução Didática para Avaliação -->
+      <div style="margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--color-cool-wash); text-align: center;">
+        <span class="text-micro color-mid-gray">Credenciais de demonstração:</span>
+        <div style="margin-top: 4px; font-size: var(--text-caption); font-family: monospace; color: var(--color-deep-gray);">
+          usuário: <strong>admin</strong> &nbsp;|&nbsp; senha: <strong>admin123</strong>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="js/nav.mjs"></script>
+  <script type="module">
+    import { fazerLogin, estaAutenticado } from "./js/auth.mjs";
+
+    // Se já estiver logado, redireciona direto para o painel
+    if (estaAutenticado()) {
+      const params = new URLSearchParams(window.location.search);
+      const redirect = params.get("redirect") || "admin.html";
+      window.location.href = redirect;
+    }
+
+    const form = document.getElementById("form-login");
+    const inputUser = document.getElementById("login-usuario");
+    const inputPass = document.getElementById("login-senha");
+    const boxErro = document.getElementById("login-erro");
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      boxErro.style.display = "none";
+      boxErro.textContent = "";
+
+      const user = inputUser.value;
+      const pass = inputPass.value;
+
+      const resultado = fazerLogin(user, pass);
+
+      if (resultado.sucesso) {
+        const params = new URLSearchParams(window.location.search);
+        const destino = params.get("redirect") || "admin.html";
+        window.location.href = destino;
+      } else {
+        boxErro.textContent = resultado.erro || "Usuário ou senha inválidos.";
+        boxErro.style.display = "block";
+        inputPass.value = "";
+        inputPass.focus();
+      }
+    });
+  </script>
+</body>
+</html>

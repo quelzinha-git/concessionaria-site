@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulador de Financiamento — Rota Motores</title>
+  <meta name="description" content="Simule o financiamento do seu carro seminovo em Sousa, PB. Taxa fixa de 1,49% ao mês com prazos flexíveis de até 60 parcelas.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/design-system.css">
+  <style>
+    .result-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-4) var(--spacing-12);
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--color-cool-wash);
+      font-size: var(--text-body-sm);
+    }
+    .result-row:last-child {
+      border-bottom: none;
+    }
+    .percentage-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .chip-btn {
+      font-size: var(--text-micro);
+      padding: 4px 10px;
+      border-radius: var(--radius-lg);
+      background-color: var(--color-cool-wash);
+      color: var(--color-deep-gray);
+      cursor: pointer;
+      border: none;
+      transition: background-color var(--transition-fast);
+    }
+    .chip-btn:hover {
+      background-color: var(--color-hairline);
+    }
+    .result-header {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-8);
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-20);
+    }
+    @media (max-width: 768px) {
+      .chip-btn {
+        min-height: var(--spacing-44);
+        min-width: var(--spacing-44);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Barra de Navegação Global Fixa -->
+  <header class="global-nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand" aria-label="Rota Motores Página Inicial">
+        <img src="assets/images/logo.svg" alt="" class="nav-brand-icon">
+        <span>Rota Motores</span>
+      </a>
+
+      <nav class="nav-menu" aria-label="Navegação Principal">
+        <div class="nav-item"><a href="index.html">Início</a></div>
+        <div class="nav-item"><a href="estoque.html">Estoque</a></div>
+        <div class="nav-item active"><a href="financiamento.html">Financiamento</a></div>
+        <div class="nav-item"><a href="sobre.html">Sobre</a></div>
+        <div class="nav-item"><a href="contato.html">Contato</a></div>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="admin.html" class="nav-btn-admin">Gestão</a>
+        <button type="button" class="nav-toggle" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="mobile-nav">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Drawer de Navegação Mobile -->
+  <nav id="mobile-nav" class="mobile-nav-drawer" aria-label="Menu Mobile">
+    <a href="index.html">Início</a>
+    <a href="estoque.html">Estoque</a>
+    <a href="financiamento.html">Financiamento</a>
+    <a href="sobre.html">Sobre</a>
+    <a href="contato.html">Contato</a>
+    <a href="admin.html">Painel de Gestão</a>
+  </nav>
+
+  <main>
+    <!-- Topo da Página (Faixa Branca) -->
+    <section class="section section-compact section-white">
+      <div class="container">
+        <span class="section-eyebrow">Planejamento Transparente</span>
+        <h1 class="text-heading" style="margin-bottom: 12px;">Simule seu financiamento</h1>
+        <p class="text-body-sm color-mid-gray" style="max-width: 680px;">
+          Escolha um veículo e compare prazos com taxa fictícia fixa de 1,49% ao mês. Sem taxas ocultas, calculando a estimativa da parcela diretamente no seu navegador.
+        </p>
+      </div>
+    </section>
+
+    <!-- Formulário e Resultados (Faixa Canvas) -->
+    <section class="section section-canvas" style="padding-top: 40px;">
+      <div class="container">
+        <div class="split-layout" style="--split-main: 1.1fr;">
+          
+          <!-- Formulário de Simulação -->
+          <div class="panel-surface">
+            <h2 class="text-subheading" style="margin-bottom: 24px;">Dados da Simulação</h2>
+
+            <form id="form-financiamento" novalidate>
+              <!-- Seleção do Carro -->
+              <div class="form-group">
+                <label for="select-veiculo" class="form-label">Selecione o Veículo</label>
+                <select id="select-veiculo" class="form-select">
+                  <option value="">Valor manual</option>
+                </select>
+                <div class="form-help">Ou selecione diretamente a partir da ficha do veículo.</div>
+              </div>
+
+              <!-- Valor do Veículo -->
+              <div class="form-group">
+                <label for="input-preco" class="form-label">Valor do Veículo (R$)</label>
+                <input type="number" id="input-preco" class="form-input" placeholder="0,00" step="100" min="100" required>
+              </div>
+
+              <!-- Valor da Entrada -->
+              <div class="form-group">
+                <label for="input-entrada" class="form-label">Valor da Entrada (R$)</label>
+                <input type="number" id="input-entrada" class="form-input" placeholder="0,00" step="100" min="0" required>
+                <div class="percentage-chips">
+                  <span class="color-mid-gray" style="font-size: var(--text-micro); align-self: center;">Sugestões:</span>
+                  <button type="button" class="chip-btn" data-percent="0.20">20%</button>
+                  <button type="button" class="chip-btn" data-percent="0.30">30%</button>
+                  <button type="button" class="chip-btn" data-percent="0.40">40%</button>
+                  <button type="button" class="chip-btn" data-percent="0.50">50%</button>
+                </div>
+              </div>
+
+              <!-- Prazo em Meses -->
+              <div class="form-group">
+                <label for="select-prazo" class="form-label">Prazo de Pagamento</label>
+                <select id="select-prazo" class="form-select" required>
+                  <option value="12">12 meses (1 ano)</option>
+                  <option value="24">24 meses (2 anos)</option>
+                  <option value="36">36 meses (3 anos)</option>
+                  <option value="48" selected>48 meses (4 anos)</option>
+                  <option value="60">60 meses (5 anos)</option>
+                </select>
+              </div>
+
+              <!-- Mensagem de Erro de Validação -->
+              <div id="msg-erro" class="alert-notice alert-error" style="display: none;"></div>
+
+              <div style="margin-top: 32px;">
+                <button type="submit" class="btn-pill-primary" style="width: 100%;">
+                  Calcular parcelas
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Resultado do Cálculo -->
+          <div class="panel-surface sticky-panel">
+            <div class="result-header">
+              <h2 class="text-subheading" style="font-size: 22px;">Estimativa Calculada</h2>
+              <span class="badge-pill badge-cool">Taxa 1,49% a.m.</span>
+            </div>
+
+            <!-- Destaque do Valor da Parcela -->
+            <div style="background-color: var(--color-canvas); border-radius: var(--radius-cards); padding: var(--card-padding); text-align: center; margin-bottom: 24px;">
+              <div class="text-caption color-mid-gray" style="text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">Valor da Parcela Mensal</div>
+              <div id="res-parcela" class="text-heading" style="color: var(--color-electric-blue); font-weight: 700;">
+                R$ 0,00
+              </div>
+              <div id="res-prazo-resumo" class="text-caption color-deep-gray" style="margin-top: 4px;">
+                em 48 parcelas fixas
+              </div>
+            </div>
+
+            <!-- Linhas de Detalhamento -->
+            <div style="margin-bottom: 24px;">
+              <div class="result-row">
+                <span class="color-mid-gray">Valor do veículo</span>
+                <strong id="res-preco-total">R$ 0,00</strong>
+              </div>
+              <div class="result-row">
+                <span class="color-mid-gray">Entrada informada</span>
+                <strong id="res-entrada">R$ 0,00</strong>
+              </div>
+              <div class="result-row">
+                <span class="color-mid-gray">Saldo financiado</span>
+                <strong id="res-saldo">R$ 0,00</strong>
+              </div>
+              <div class="result-row">
+                <span class="color-mid-gray">Total de juros estimados</span>
+                <strong id="res-juros">R$ 0,00</strong>
+              </div>
+              <div class="result-row" style="padding-top: 16px; border-top: 2px solid var(--color-hairline);">
+                <span class="color-primary" style="font-weight: 600;">Total a prazo (com entrada)</span>
+                <strong id="res-total-geral" style="font-size: var(--text-body); color: var(--color-primary-ink);">R$ 0,00</strong>
+              </div>
+            </div>
+
+            <!-- Aviso Legal Acadêmico Obrigatório -->
+            <div class="alert-notice alert-academic">
+              <strong>Aviso legal:</strong> Simulação acadêmica. A estimativa não constitui proposta de crédito e não inclui tarifas, impostos ou seguros.
+            </div>
+
+            <div style="margin-top: 20px; text-align: center;">
+              <a href="contato.html" class="arrow-link">Tirar dúvidas sobre a simulação <span class="arrow">→</span></a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Rodapé Global -->
+  <footer class="global-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-brand-title">Rota Motores</div>
+          <p class="text-caption color-mid-gray">
+            Concessionária fictícia de seminovos ambientada em Sousa, PB. Projeto acadêmico de Desenvolvimento de Aplicações Web.
+          </p>
+        </div>
+
+        <div class="footer-links">
+          <div class="footer-links-group">
+            <h4>Navegação</h4>
+            <a href="index.html">Início</a>
+            <a href="estoque.html">Estoque</a>
+            <a href="financiamento.html">Financiamento</a>
+            <a href="sobre.html">Sobre o Projeto</a>
+            <a href="contato.html">Contato</a>
+          </div>
+
+          <div class="footer-links-group">
+            <h4>Gestão</h4>
+            <a href="admin.html">Painel Administrativo</a>
+            <a href="login.html">Login Gestor</a>
+          </div>
+
+          <div class="footer-links-group">
+            <h4>Atendimento Ilustrativo</h4>
+            <span class="text-caption color-mid-gray">Sousa, Paraíba</span>
+            <span class="text-caption color-mid-gray">contato@rotamotores.example</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-notice">
+          Projeto acadêmico · Veículos e valores demonstrativos · IFPB Campus Sousa
+        </div>
+        <div>
+          © 2026 Rota Motores. Todos os direitos reservados.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="js/nav.mjs"></script>
+  <script type="module">
+    import { listarVeiculos } from "./js/db.mjs";
+    import { formatarMoeda } from "./js/formatters.mjs";
+    import { calcularFinanciamento } from "./js/financiamento.mjs";
+
+    let veiculosDisponiveis = [];
+
+    const selectVeiculo = document.getElementById("select-veiculo");
+    const inputPreco = document.getElementById("input-preco");
+    const inputEntrada = document.getElementById("input-entrada");
+    const selectPrazo = document.getElementById("select-prazo");
+    const form = document.getElementById("form-financiamento");
+    const msgErro = document.getElementById("msg-erro");
+
+    // Elementos de exibição do resultado
+    const resParcela = document.getElementById("res-parcela");
+    const resPrazoResumo = document.getElementById("res-prazo-resumo");
+    const resPrecoTotal = document.getElementById("res-preco-total");
+    const resEntrada = document.getElementById("res-entrada");
+    const resSaldo = document.getElementById("res-saldo");
+    const resJuros = document.getElementById("res-juros");
+    const resTotalGeral = document.getElementById("res-total-geral");
+
+    async function inicializarSimulador() {
+      try {
+        veiculosDisponiveis = await listarVeiculos();
+
+        for (const veiculo of veiculosDisponiveis) {
+          selectVeiculo.add(new Option(veiculo.nome, veiculo.id));
+        }
+
+        const idParam = new URLSearchParams(window.location.search).get("id");
+        const veiculoInicial = veiculosDisponiveis.find(v => String(v.id) === idParam) || veiculosDisponiveis[0];
+        if (veiculoInicial) {
+          selectVeiculo.value = String(veiculoInicial.id);
+          preencherValores(veiculoInicial);
+        }
+      } catch (err) {
+        console.error("Erro ao inicializar simulador:", err);
+      }
+    }
+
+    function preencherValores(veiculo) {
+      inputPreco.value = veiculo?.preco ?? "";
+      inputEntrada.value = veiculo ? Math.round(veiculo.preco * 0.3) : "";
+      executarCalculo();
+    }
+
+    selectVeiculo.addEventListener("change", () => {
+      const veiculo = veiculosDisponiveis.find(v => String(v.id) === selectVeiculo.value);
+      preencherValores(veiculo);
+    });
+
+    // Botões de atalho de porcentagem de entrada
+    document.querySelectorAll(".chip-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const percent = parseFloat(btn.dataset.percent);
+        const preco = parseFloat(inputPreco.value) || 0;
+        if (preco > 0) {
+          inputEntrada.value = Math.round(preco * percent);
+          executarCalculo();
+        }
+      });
+    });
+
+    function executarCalculo() {
+      msgErro.style.display = "none";
+      msgErro.textContent = "";
+
+      const preco = parseFloat(inputPreco.value) || 0;
+      const entrada = parseFloat(inputEntrada.value) || 0;
+      const prazo = parseInt(selectPrazo.value, 10) || 48;
+
+      const resultado = calcularFinanciamento(preco, entrada, prazo);
+
+      if (!resultado.valido) {
+        msgErro.textContent = resultado.erro;
+        msgErro.style.display = "block";
+        resParcela.textContent = "R$ 0,00";
+        resPrazoResumo.textContent = "Ajuste os valores para simular";
+        resPrecoTotal.textContent = formatarMoeda(preco);
+        resEntrada.textContent = formatarMoeda(entrada);
+        resSaldo.textContent = "R$ 0,00";
+        resJuros.textContent = "R$ 0,00";
+        resTotalGeral.textContent = "R$ 0,00";
+        return;
+      }
+
+      // Atualiza interface com os valores calculados
+      resParcela.textContent = formatarMoeda(resultado.valorParcela);
+      resPrazoResumo.textContent = `em ${resultado.prazoMeses} parcelas fixas de ${formatarMoeda(resultado.valorParcela)}`;
+      resPrecoTotal.textContent = formatarMoeda(resultado.precoVeiculo);
+      resEntrada.textContent = formatarMoeda(resultado.valorEntrada);
+      resSaldo.textContent = formatarMoeda(resultado.saldoFinanciado);
+      resJuros.textContent = formatarMoeda(resultado.totalJuros);
+      resTotalGeral.textContent = formatarMoeda(resultado.totalPagoGeral);
+    }
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      executarCalculo();
+    });
+
+    inputPreco.addEventListener("input", executarCalculo);
+    inputEntrada.addEventListener("input", executarCalculo);
+    selectPrazo.addEventListener("change", executarCalculo);
+
+    document.addEventListener("DOMContentLoaded", inicializarSimulador);
+  </script>
+</body>
+</html>
