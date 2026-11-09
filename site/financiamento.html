@@ -137,7 +137,8 @@
               <!-- Valor da Entrada -->
               <div class="form-group">
                 <label for="input-entrada" class="form-label">Valor da Entrada (R$)</label>
-                <input type="number" id="input-entrada" class="form-input" placeholder="0,00" step="100" min="0" required>
+                <input type="number" id="input-entrada" class="form-input" step="0.01" aria-describedby="ajuda-entrada" required>
+                <div id="ajuda-entrada" class="form-help"></div>
                 <div class="percentage-chips">
                   <span class="color-mid-gray" style="font-size: var(--text-micro); align-self: center;">Sugestões:</span>
                   <button type="button" class="chip-btn" data-percent="0.20">20%</button>
@@ -277,7 +278,7 @@
   <script type="module">
     import { listarVeiculos } from "./js/db.mjs";
     import { formatarMoeda } from "./js/formatters.mjs";
-    import { calcularFinanciamento } from "./js/financiamento.mjs";
+    import { calcularFinanciamento, ENTRADA_MINIMA } from "./js/financiamento.mjs";
 
     let veiculosDisponiveis = [];
 
@@ -287,6 +288,10 @@
     const selectPrazo = document.getElementById("select-prazo");
     const form = document.getElementById("form-financiamento");
     const msgErro = document.getElementById("msg-erro");
+
+    inputEntrada.min = ENTRADA_MINIMA;
+    inputEntrada.value = ENTRADA_MINIMA;
+    document.getElementById("ajuda-entrada").textContent = `Entrada mínima de ${formatarMoeda(ENTRADA_MINIMA)}.`;
 
     // Elementos de exibição do resultado
     const resParcela = document.getElementById("res-parcela");
@@ -318,7 +323,7 @@
 
     function preencherValores(veiculo) {
       inputPreco.value = veiculo?.preco ?? "";
-      inputEntrada.value = veiculo ? Math.round(veiculo.preco * 0.3) : "";
+      inputEntrada.value = ENTRADA_MINIMA;
       executarCalculo();
     }
 
@@ -333,7 +338,7 @@
         const percent = parseFloat(btn.dataset.percent);
         const preco = parseFloat(inputPreco.value) || 0;
         if (preco > 0) {
-          inputEntrada.value = Math.round(preco * percent);
+          inputEntrada.value = Math.max(ENTRADA_MINIMA, Math.round(preco * percent));
           executarCalculo();
         }
       });

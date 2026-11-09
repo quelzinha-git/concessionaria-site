@@ -3,7 +3,10 @@
  * Taxa mensal fixa de 1,49% a.m. conforme briefing.md e conteudo.md
  */
 
+import { formatarMoeda } from "./formatters.mjs";
+
 export const TAXA_MENSAL_FIXA = 0.0149; // 1,49% ao mês
+export const ENTRADA_MINIMA = 100;
 export const SALDO_MINIMO_FINANCIADO = 100.0; // R$ 100,00
 
 export const AVISO_LEGAL_FINANCIAMENTO = 
@@ -27,8 +30,8 @@ export function calcularFinanciamento(valorVeiculo, valorEntrada, prazoMeses) {
     return { valido: false, erro: "Informe um valor de veículo válido maior que zero." };
   }
 
-  if (entrada < 0) {
-    return { valido: false, erro: "O valor da entrada não pode ser negativo." };
+  if (entrada < ENTRADA_MINIMA) {
+    return { valido: false, erro: `Informe uma entrada de pelo menos ${formatarMoeda(ENTRADA_MINIMA)}.` };
   }
 
   if (entrada >= preco) {
@@ -38,7 +41,7 @@ export function calcularFinanciamento(valorVeiculo, valorEntrada, prazoMeses) {
     };
   }
 
-  const saldoFinanciado = preco - entrada;
+  const saldoFinanciado = Math.round((preco - entrada) * 100) / 100;
 
   if (saldoFinanciado < SALDO_MINIMO_FINANCIADO) {
     return { 
