@@ -68,13 +68,14 @@
 
   <main>
     <!-- Topo da Página (Faixa Branca) -->
-    <section class="section section-compact section-white">
+    <section class="section section-compact section-white page-photo">
       <div class="container">
         <span class="section-eyebrow">Catálogo Atualizado</span>
         <h1 class="text-heading" style="margin-bottom: 12px;">Encontre seu próximo carro</h1>
         <p class="text-body-sm color-mid-gray" style="max-width: 640px;">
           Use os filtros para explorar os veículos e abra a ficha do modelo que chamou sua atenção. Todos os carros acompanham histórico de procedência.
         </p>
+        <p class="photo-note text-caption color-mid-gray"><a href="sobre.html#creditos-fotos" class="hairline-link">Fotos ilustrativas do estoque inicial e créditos</a></p>
       </div>
     </section>
 
@@ -251,7 +252,7 @@
       grid.innerHTML = lista.map(v => `
         <div class="card-showcase">
           <div class="card-media">
-            <img src="${v.imagemUrl || 'assets/images/corolla.svg'}" alt="${v.nome}" loading="lazy">
+            <img src="${v.imagemUrl || 'assets/images/corolla.jpg'}" alt="${v.nome}" loading="lazy">
           </div>
           <div class="card-body">
             <span class="card-eyebrow">${v.categoria || 'Seminovo'}</span>

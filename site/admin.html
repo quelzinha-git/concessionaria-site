@@ -179,7 +179,7 @@
 
   <main>
     <!-- Topo da Seção de Gestão (Faixa Branca) -->
-    <section class="section section-compact section-white">
+    <section class="section section-compact section-white page-photo">
       <div class="container">
         <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 20px;">
           <div>
@@ -424,6 +424,7 @@
     import { protegerRotaAdmin, fazerLogout } from "./js/auth.mjs";
     import { listarVeiculos, obterVeiculoPorId, salvarVeiculo, excluirVeiculo, restaurarCatalogoPadrao } from "./js/db.mjs";
     import { formatarMoeda, formatarKm } from "./js/formatters.mjs";
+    import { FOTOS_PADRAO } from "./assets/dados.mjs";
 
     // 1. Protege rota imediatamente
     protegerRotaAdmin();
@@ -500,7 +501,7 @@
         tabelaCorpo.innerHTML = veiculos.map(v => `
           <tr role="row">
             <td role="cell">
-              <img src="${v.imagemUrl || 'assets/images/corolla.svg'}" alt="${v.nome}" class="admin-thumb">
+              <img src="${v.imagemUrl || FOTOS_PADRAO[v.categoria] || FOTOS_PADRAO.Sedan}" alt="${v.nome}" class="admin-thumb">
             </td>
             <td role="cell">
               <strong>${v.nome}</strong>
@@ -672,14 +673,7 @@
       // Define a URL da foto:
       // Se subiu nova foto, usa novaFotoBase64;
       // Se manteve existente, usa campoFotoAtual.value;
-      // Se não tem foto, associa a ilustração padrão da categoria correspondente
-      let imagemFinal = novaFotoBase64 || campoFotoAtual.value;
-      if (!imagemFinal) {
-        if (categoria === "SUV") imagemFinal = "assets/images/renegade.svg";
-        else if (categoria === "Hatch") imagemFinal = "assets/images/argo.svg";
-        else if (categoria === "Picape") imagemFinal = "assets/images/strada.svg";
-        else imagemFinal = "assets/images/corolla.svg";
-      }
+      const imagemFinal = novaFotoBase64 || campoFotoAtual.value || FOTOS_PADRAO[categoria] || FOTOS_PADRAO.Sedan;
 
       const dadosParaSalvar = {
         nome,

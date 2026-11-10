@@ -3,13 +3,23 @@
  * Armazena registros de veículos e imagens no navegador.
  */
 
-import { VEICULOS_INICIAIS } from "../assets/dados.mjs";
+import { FOTOS_PADRAO, VEICULOS_INICIAIS } from "../assets/dados.mjs";
 
 const DB_NAME = "RotaMotoresDB";
 const DB_VERSION = 1;
 const STORE_NAME = "veiculos";
 
 let dbInstance = null;
+
+const FOTOS_PADRAO_ANTIGAS = new Map(
+  Object.values(FOTOS_PADRAO).map(foto => [foto.replace(/\.jpg$/, ".svg"), foto])
+);
+
+function atualizarFotoPadrao(veiculo) {
+  const foto = FOTOS_PADRAO_ANTIGAS.get(veiculo.imagemUrl);
+  if (foto) veiculo.imagemUrl = foto;
+  return veiculo;
+}
 
 /**
  * Abre a conexão com o banco de dados IndexedDB e inicializa o schema/seed se necessário
@@ -86,7 +96,7 @@ export async function listarVeiculos() {
     const request = store.getAll();
 
     request.onsuccess = () => {
-      resolve(request.result || []);
+      resolve((request.result || []).map(atualizarFotoPadrao));
     };
 
     request.onerror = (e) => {
@@ -108,7 +118,7 @@ export async function obterVeiculoPorId(id) {
     const request = store.get(idNum);
 
     request.onsuccess = () => {
-      resolve(request.result || null);
+      resolve(request.result ? atualizarFotoPadrao(request.result) : null);
     };
 
     request.onerror = (e) => {

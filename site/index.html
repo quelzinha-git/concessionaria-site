@@ -51,7 +51,7 @@
 
   <main>
     <!-- Seção Hero — "Cathedral of white space" -->
-    <section class="section section-hero section-white text-center">
+    <section class="section section-hero section-white page-photo text-center">
       <div class="container">
         <span class="section-eyebrow">Seminovos Selecionados em Sousa</span>
         <h1 class="text-display home-hero-title">
@@ -68,8 +68,9 @@
 
         <!-- Imagem Hero em Destaque -->
         <div class="home-hero-media">
-          <img src="assets/images/corolla.svg" alt="Toyota Corolla GLi em destaque na vitrine Rota Motores">
+          <img src="assets/images/corolla.jpg" alt="Foto ilustrativa de um Toyota Corolla prata">
         </div>
+        <p class="photo-note text-caption color-mid-gray"><a href="sobre.html#creditos-fotos" class="hairline-link">Foto ilustrativa e créditos</a></p>
       </div>
     </section>
 
@@ -90,7 +91,7 @@
           <!-- Renderizado via JS dinamicamente a partir do IndexedDB -->
           <div class="card-showcase">
             <div class="card-media">
-              <img src="assets/images/corolla.svg" alt="Toyota Corolla GLi">
+              <img src="assets/images/corolla.jpg" alt="Toyota Corolla">
             </div>
             <div class="card-body">
               <span class="card-eyebrow">Sedan</span>
@@ -112,7 +113,7 @@
 
           <div class="card-showcase">
             <div class="card-media">
-              <img src="assets/images/renegade.svg" alt="Jeep Renegade Sport">
+              <img src="assets/images/renegade.jpg" alt="Jeep Renegade">
             </div>
             <div class="card-body">
               <span class="card-eyebrow">SUV</span>
@@ -134,7 +135,7 @@
 
           <div class="card-showcase">
             <div class="card-media">
-              <img src="assets/images/argo.svg" alt="Fiat Argo Drive">
+              <img src="assets/images/argo.jpg" alt="Fiat Argo Drive">
             </div>
             <div class="card-body">
               <span class="card-eyebrow">Hatch</span>
@@ -296,7 +297,7 @@
         grid.innerHTML = recentes.map(v => `
           <div class="card-showcase">
             <div class="card-media">
-              <img src="${v.imagemUrl || 'assets/images/corolla.svg'}" alt="${v.nome}">
+              <img src="${v.imagemUrl || 'assets/images/corolla.jpg'}" alt="${v.nome}">
             </div>
             <div class="card-body">
               <span class="card-eyebrow">${v.categoria || 'Seminovo'}</span>

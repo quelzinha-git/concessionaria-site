@@ -81,7 +81,7 @@
 
   <main>
     <!-- Área de Erro / Não Encontrado -->
-    <div id="veiculo-nao-encontrado" class="section section-white" style="display: none; padding: 100px 0; text-align: center;">
+    <div id="veiculo-nao-encontrado" class="section section-white page-photo" style="display: none; padding: 100px 0; text-align: center;">
       <div class="container-narrow">
         <span class="section-eyebrow">Aviso</span>
         <h1 class="text-heading" style="margin-bottom: 16px;">Veículo não encontrado</h1>
@@ -95,7 +95,7 @@
     <!-- Conteúdo do Veículo -->
     <div id="veiculo-conteudo">
       <!-- Seção Superior do Veículo (Faixa Branca) -->
-      <section class="section section-compact section-white">
+      <section class="section section-compact section-white page-photo">
         <div class="container">
           <div style="margin-bottom: 24px;">
             <a href="estoque.html" class="arrow-link">← Voltar ao estoque</a>
@@ -115,9 +115,10 @@
           </div>
 
           <!-- Imagem Grande de Destaque -->
-          <div style="width: 100%; max-height: 540px; border-radius: var(--radius-productimages); overflow: hidden; background-color: var(--color-canvas); display: flex; align-items: center; justify-content: center;">
-            <img id="veiculo-imagem" src="assets/images/corolla.svg" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+          <div style="width: 100%; border-radius: var(--radius-productimages); overflow: hidden; background-color: var(--color-canvas);">
+            <img id="veiculo-imagem" alt="" style="width: 100%; max-height: 540px; object-fit: contain;">
           </div>
+          <p id="veiculo-foto-nota" class="photo-note text-caption color-mid-gray" hidden><a href="sobre.html#creditos-fotos" class="hairline-link">Foto ilustrativa e créditos</a></p>
         </div>
       </section>
 
@@ -248,6 +249,7 @@
   <script type="module">
     import { obterVeiculoPorId } from "./js/db.mjs";
     import { formatarMoeda, formatarKm } from "./js/formatters.mjs";
+    import { FOTOS_PADRAO } from "./assets/dados.mjs";
 
     async function carregarFicha() {
       const params = new URLSearchParams(window.location.search);
@@ -280,8 +282,11 @@
         document.getElementById("card-lateral-preco").textContent = precoFormatado;
 
         const imgEl = document.getElementById("veiculo-imagem");
-        imgEl.src = veiculo.imagemUrl || "assets/images/corolla.svg";
-        imgEl.alt = veiculo.nome;
+        const foto = veiculo.imagemUrl || FOTOS_PADRAO[veiculo.categoria] || FOTOS_PADRAO.Sedan;
+        const fotoIlustrativa = Object.values(FOTOS_PADRAO).includes(foto);
+        imgEl.src = foto;
+        imgEl.alt = fotoIlustrativa ? `Foto ilustrativa para a ficha de ${veiculo.nome}` : veiculo.nome;
+        document.getElementById("veiculo-foto-nota").hidden = !fotoIlustrativa;
 
         document.getElementById("spec-ano").textContent = veiculo.ano || "—";
         document.getElementById("spec-km").textContent = formatarKm(veiculo.km);

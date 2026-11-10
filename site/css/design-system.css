@@ -329,6 +329,23 @@ ul, ol {
   background-color: var(--color-canvas);
 }
 
+.page-photo {
+  background-image:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.74), rgba(255, 255, 255, 0.9)),
+    url("../assets/images/showroom.jpg");
+  background-position: center;
+  background-size: cover;
+}
+
+.page-photo .section-eyebrow,
+.page-photo .color-mid-gray {
+  color: var(--color-deep-gray);
+}
+
+.photo-note {
+  margin-top: var(--spacing-12);
+}
+
 .section-header {
   margin-bottom: var(--spacing-48);
 }

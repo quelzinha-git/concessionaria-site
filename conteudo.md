@@ -22,4 +22,4 @@ A voz é direta e informativa. Títulos e descrições individuais estão no `<h
 - No contato, a prévia fica na página. O endereço com domínio `.example` e o horário são ilustrativos.
 - No rodapé, **Projeto acadêmico · Veículos e valores demonstrativos**.
 
-O estoque inicial contém Toyota Corolla GLi, Jeep Renegade Sport, Fiat Argo Drive e Fiat Strada Endurance. O conteúdo dos registros iniciais está em `site/assets/dados.mjs` e as quatro ilustrações representam categorias de carros. Os registros inseridos na gestão podem ter foto própria.
+O estoque inicial contém Toyota Corolla GLi, Jeep Renegade Sport, Fiat Argo Drive e Fiat Strada Endurance. Os registros iniciais estão em `site/assets/dados.mjs` e usam fotos ilustrativas licenciadas, com créditos na página Sobre. Os registros inseridos na gestão podem ter foto própria.
